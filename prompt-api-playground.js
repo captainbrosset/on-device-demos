@@ -132,6 +132,7 @@ addEventListener("load", () => {
             firstChunkLatencyMetricEl.innerText = Math.round(timeToFirstChunk);
             spinnerEl.remove();
             isFirstChunk = false;
+            outputEl.textContent = "";
           }
 
           count++;
@@ -140,7 +141,7 @@ addEventListener("load", () => {
           const rate = count / ((performance.now() - streamStartTime) / 1000);
           chunkRateMetricEl.innerText = rate.toFixed(1);``
 
-          outputEl.textContent = chunk;
+          outputEl.textContent += chunk;
         }
       } catch (e) {
         displaySessionMessage(`Could not generate a response: ${e}`, true);
