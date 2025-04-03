@@ -1,6 +1,6 @@
 # Prompt API demos
 
-The webpages in this directory demonstrate how to use the Prompt and Summarizer APIs in Microsoft Edge to run an on-device AI language model in the browser.
+The webpages in this directory demonstrate how to use the Prompt and Summarizer APIs to run an on-device AI language model in the browser.
 
 ## Demos
 
@@ -23,7 +23,7 @@ The webpages in this directory demonstrate how to use the Prompt and Summarizer 
     
     ⚠️ **This demo is in progress. I'm switching it from using the Prompt API to using the Summarizer API.**
 
-## Requirements to run the demos
+<!-- ## Requirements to run the demos
 
 To run the above demos, make sure that you meet the following requirements:
 
@@ -63,3 +63,4 @@ To run the above demos, make sure that you meet the following requirements:
     
      * **Edge LLM On Device Model**
      * **Edge LLM Runtime**
+-->
