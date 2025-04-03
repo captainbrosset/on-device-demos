@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="https://edgestatic.azureedge.net/welcome/static/favicon.png">
+  <link rel="stylesheet" href="button.css">
+  <title>Summarize unread email threads</title>
+  <style>
+    :root {
+      --main-color: #7c0a90;
+      --secondary-color: rgb(173 249 173);
+      --border-color: #ccc;
+      --alt-background-color: #eee;
+      --alt-text-color: #777;
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-size: 1rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+      display: grid;
+      grid-template-columns: 1.5fr 2fr 5fr;
+      grid-template-rows: min-content auto;
+    }
+
+    h1 {
+      grid-column: span 3;
+      padding: 1rem;
+      background: var(--main-color);
+      color: white;
+      margin: 0;
+      border-block-end: 1px solid var(--border-color);
+    }
+
+    button {
+      font-family: inherit;
+      font-size: .8rem;
+      background: var(--alt-background-color);
+      border: 1px solid var(--border-color);
+      padding: .25rem .5rem;
+      border-radius: .25rem;
+    }
+
+    button:active {
+      transform: scale(.95);
+    }
+
+    .folder-column.folders {
+      border-inline-end: 1px solid var(--border-color);
+      background: var(--alt-background-color);
+      overflow-y: auto;
+      padding: .5rem;
+      font-size: .8rem;
+    }
+
+    .folders,
+    .folders li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .folders li {
+      padding: .25rem 1rem;
+      border-radius: .25rem;
+      cursor: pointer;
+      margin-block-end: .25rem;
+    }
+
+    .folders li.selected,
+    .folders li:hover {
+      background: hsl(from var(--main-color) h s l / .2);
+    }
+
+    .email-previews-column {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      overflow-y: auto;
+      border-inline-end: 1px solid var(--border-color);
+    }
+
+    .email-previews-column li {
+      padding: .5rem;
+      border-block-end: 1px solid var(--border-color);
+      cursor: pointer;
+      font-size: .8rem;
+    }
+
+    .email-previews-column li.selected,
+    .email-previews-column li:hover {
+      background: hsl(from var(--main-color) h s l / .1);
+    }
+
+    .email-previews-column li .people {
+      font-size: .9rem;
+      margin-block-end: .25rem;
+    }
+
+    .email-previews-column li.unread .subject {
+      font-weight: bold;
+    }
+
+    .email-previews-column li .first-lines {
+      color: var(--alt-text-color);
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      -webkit-line-clamp: 2;
+    }
+
+    .email-previews-column li time {
+      float: right;
+      padding-inline-start: .5rem;
+    }
+
+    .email-details-column {
+      padding: 1rem;
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: 1fr max-content;
+      grid-template-rows: min-content auto;
+      gap: 1rem;
+    }
+
+    .email-details-column .subject {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .email-details-column .actions {
+      padding-block-start: .25rem;
+    }
+
+    .email-details-column .thread {
+      grid-column: span 2;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .email-details-column .thread .email {
+      padding: 1rem 0;
+      border-block-end: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .email-details-column .thread .email .from {
+      font-weight: bold;
+    }
+
+    .email-details-column .thread .email .to {
+      color: var(--alt-text-color);
+    }
+
+    .email-details-column .thread .email .to::before {
+      content: "To: ";
+    }
+
+    .email-details-column .thread .email time {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 1rem;
+      font-size: .9rem;
+      color: var(--alt-text-color);
+    }
+
+    .email-details-column .ai-summary {
+      padding: 1rem;
+      background-color: hsl(from var(--secondary-color) h s l / .3);
+      border-radius: .5rem;
+      display: none;
+    }
+
+    .email-details-column .ai-summary:not(:empty) {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>MyMail</h1>
+
+  <ul class="folder-column folders">
+    <li class="selected">Inbox</li>
+    <li>Archive</li>
+    <li>Sent</li>
+    <li>Trash</li>
+    <li>Spam</li>
+    <li>Project foo</li>
+    <li>Project bar</li>
+    </li>
+  </ul>
+
+  <ul class="email-previews-column">
+    <li class="unread">
+      <div class="people">Piet Smit</div>
+      <time>16:36</time>
+      <div class="subject">Quick update on project Foo</div>
+      <div class="first-lines">Hi Heidi, here is a quick update on project Foo, which has been going very well lately.
+        We've unblocked the remaining showstopper bug we had and are making good progress.</div>
+    </li>
+    <li class="unread">
+      <div class="people">Hannah Haynes, Amelie Garner, Rene Dolejsi</div>
+      <time>12:43</time>
+      <div class="subject">Planning for the upcoming offsite</div>
+      <div class="first-lines">Let's schedule a short meeting to discuss the detailed plan. I like where this is going
+        but I think we need to align on design and such.</div>
+    </li>
+    <li class="selected unread">
+      <div class="people">Helena Botha, Rene Dolejsi, Piet Smit</div>
+      <time>10:24</time>
+      <div class="subject">Help needed! Anyone facing the same bug?</div>
+      <div class="first-lines">I believe I know the root of your issue. It sounds like the update might have changed
+        some default permissions or settings for adding customers.</div>
+    </li>
+    <li>
+      <div class="people">Heidi Liew</div>
+      <time>Wed 22:18</time>
+      <div class="subject">Final thoughts on the design mockup</div>
+      <div class="first-lines">I reviewed the final mockups, and I think we can move forward. There are a few minor
+        tweaks, but nothing major. Let's finalize tomorrow.</div>
+    </li>
+    <li>
+      <div class="people">Diane Gabriene</div>
+      <time>Wed 14:22</time>
+      <div class="subject">Meeting rescheduled to Friday</div>
+      <div class="first-lines">Hi team, just a heads up that the client meeting has been moved to Friday at 11 AM.
+        Please adjust your calendars accordingly.</div>
+    </li>
+    <li>
+      <div class="people">Ahmad Hakiki, Heidi Liew</div>
+      <time>Wed 10:01</time>
+      <div class="subject">Update on API integration</div>
+      <div class="first-lines">Hi Heidi, the API integration is almost complete, but we're facing some issues with
+        authentication. Can you take a look?</div>
+    </li>
+    <li class="unread">
+      <div class="people">Leela Parameswaran, Piet Smit, Hannah Haynes</div>
+      <time>Mon 14:56</time>
+      <div class="subject">Team lunch next week</div>
+      <div class="first-lines">Hey everyone, let's plan a team lunch next week to celebrate the successful release. Any
+        preferences for the restaurant?</div>
+    </li>
+    <li>
+      <div class="people">Vladimir Zeman</div>
+      <time>Mon 13:37</time>
+      <div class="subject">Bug report: Issue with login page</div>
+      <div class="first-lines">Hi, I've encountered an issue with the login page where users are unable to log in after
+        resetting their password. Please investigate.</div>
+    </li>
+  </ul>
+
+  <div class="email-details-column">
+    <div class="subject">Help needed! Anyone facing the same bug?</div>
+    <div class="actions">
+      <button class="main-button ai-button" id="summarize-thread">Summarize</button>
+      <button>Reply</button>
+      <button>Forward</button>
+      <button>Delete</button>
+    </div>
+    <ul class="thread">
+      <li class="ai-summary"></li>
+      <li class="email">
+        <div class="from">Piet Smit</div>
+        <div class="to">Rene Dolejsi, Helena Botha, Internal support</div>
+        <time>10:24</time>
+        <div class="message">
+          <p>Hi Helena,</p>
+          <p>I believe I know the root of your issue. It sounds like the update might have changed some default
+            permissions or settings for adding customers.</p>
+          <p>Here's what you can try to fix the issue:</p>
+          <ol>
+            <li>Go to the system settings in your management system.</li>
+            <li>Navigate to the "User Permissions" section (it might be under "Admin" or "Security" settings depending
+              on your version).</li>
+            <li>Check if the permission to add or modify customers is enabled for your user account or role. Sometimes
+              updates reset these permissions.</li>
+            <li>If you have the proper access, re-enable this option and save the changes.</li>
+            <li>Try adding a customer again to see if this resolves the problem.</li>
+          </ol>
+          <p>If this doesn't work, there could be a bug with the new update. In that case, I'd recommend reaching out to
+            IT support to report the issue, and they can escalate it to the development team if needed.</p>
+          <p>Hope this helps! Let me know if you need further assistance.</p>
+          <p>Best regards,<br>Piet</p>
+        </div>
+      </li>
+      <li class="email">
+        <div class="from">Rene Dolejsi</div>
+        <div class="to">Helena Botha, Internal support</div>
+        <time>08:16</time>
+        <div class="message">
+          <p>Have you tried turning it off and on again? That usually does the trick for me.</p>
+          <p>Honestly, I don't know what I'd do without that trick. It's saved me so much time. I hope it works for you
+            too.</p>
+          <p>Have a great day,<br>Rene</p>
+        </div>
+      </li>
+      <li class="email">
+        <div class="from">Helena Botha</div>
+        <div class="to">Internal support</div>
+        <time>08:10</time>
+        <div class="message">
+          <p>Help! Ever since I updated my install of the management system, I can't get it to add customers. Has anyone else faced the same issue and found a solution?</p>
+          <p>Here's what I'm doing:</p>
+          <ol>
+            <li>Open the management system</li>
+            <li>Click "Add customer"</li>
+            <li>Fill in the details</li>
+            <li>Click "Save"</li>
+          </ol>
+          <p>I was expecting the customer to be added to the list but it's not showing up. I've tried
+            refreshing the page, but that didn't help.</p>
+          <p>Helena</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <script src="session.js"></script>
+  <script src="summarize-email-thread.js"></script>
+</body>
+
+</html>

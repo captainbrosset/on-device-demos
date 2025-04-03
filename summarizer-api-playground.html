@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="https://edgestatic.azureedge.net/welcome/static/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap"
+    rel="stylesheet">
+  <title>Summarizer API playground</title>
+  <link rel="stylesheet" href="button.css">
+  <link rel="stylesheet" href="design.css">
+  <link rel="stylesheet" href="spinner.css">
+  <style>
+    .playground {
+      max-width: 60rem;
+      margin: var(--space-from-edge) auto;
+      display: grid;
+      gap: var(--gap);
+      grid-template-rows: min-content min-content 1fr;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+        "title title"
+        "message message"
+        "form output";
+    }
+
+    @media (max-width: 800px) {
+      .playground {
+        grid-template-columns: 1fr;
+        grid-template-rows: min-content min-content auto auto;
+        grid-template-areas:
+          "title"
+          "message"
+          "form"
+          "output";
+      }
+    }
+
+    .playground h1 {
+      grid-area: title;
+      margin: 0;
+    }
+
+    #message-ui {
+      grid-area: message;
+    }
+
+    .settings {
+      grid-area: form;
+      overflow: hidden;
+    }
+
+    .settings header {
+      border-block-end: 1px solid var(--divider-color);
+      background: white;
+      padding: var(--padding);
+    }
+
+    .settings header h2 {
+      margin: 0;
+    }
+
+    .settings .settings-row {
+      padding: var(--padding);
+    }
+
+    .settings .settings-row:not(:last-child) {
+      border-block-end: 1px solid var(--divider-color);
+    }
+
+    .settings .settings-row.submit {
+      text-align: center;
+    }
+
+    textarea {
+      height: 16rem;
+      max-height: 50vh;
+    }
+
+    #output {
+      grid-area: output;
+      border-radius: var(--outer-radius);
+      background: var(--alternate-color);
+      margin: 0;
+      min-height: 10rem;
+      padding: 1rem;
+      font-family: inherit;
+      font-size: 1rem;
+      white-space: pre-wrap;
+      position: relative;
+    }
+
+    #output:empty::before {
+      content: "The summary will appear here";
+      color: #777;
+      text-align: center;
+      padding: var(--padding) 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="playground">
+    <h1>Summarizer API playground</h1>
+
+    <div id="message-ui" class="message-bar"></div>
+
+    <div class="settings card-with-shadow">
+      <header>
+        <h2>Settings</h2>
+      </header>
+
+      <div class="settings-row">
+        <label for="content">Type or paste the text you want to summarize</label>
+        <textarea spellcheck="false" id="content"></textarea>
+      </div>
+
+      <div class="settings-row">
+        <label for="context">Additional context about the text, such as its type</label>
+        <input type="text" id="context" placeholder="Additional context about the content that can help the summarizer">
+      </div>
+
+      <div class="settings-row">
+        <label for="type">The type of summary</label>
+        <div class="radio-group" id="type">
+          <label for="type-key-points">
+            <input type="radio" id="type-key-points" name="type" value="key-points" checked>
+            Key Points
+          </label>
+          <label for="type-tldr">
+            <input type="radio" id="type-tldr" name="type" value="tl;dr">
+            TL;DR
+          </label>
+          <label for="type-teaser">
+            <input type="radio" id="type-teaser" name="type" value="teaser">
+            Teaser
+          </label>
+          <label for="type-headline">
+            <input type="radio" id="type-headline" name="type" value="headline">
+            Headline
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-row">
+        <label for="length">The length of the summary</label>
+        <div class="radio-group" id="length">
+          <label for="length-short">
+            <input type="radio" id="length-short" name="length" value="short" checked>
+            Short
+          </label>
+          <label for="length-medium">
+            <input type="radio" id="length-medium" name="length" value="medium">
+            Medium
+          </label>
+          <label for="length-long">
+            <input type="radio" id="length-long" name="length" value="long">
+            Long
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-row">
+        <label for="format">The format of the summary</label>
+        <div class="radio-group" id="format">
+          <label for="format-markdown">
+            <input type="radio" id="format-markdown" name="format" value="markdown" checked>
+            Markdown
+          </label>
+          <label for="format-plain-text">
+            <input type="radio" id="format-plain-text" name="format" value="plain-text">
+            Plain text
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-row submit">
+        <button class="ai-button" id="summarize">Summarize</button>
+      </div>
+    </div>
+
+    <pre id="output"></pre>
+  </div>
+
+  <script src="session.js"></script>
+  <script src="spinner.js"></script>
+  <script src="summarizer-api-playground.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="https://edgestatic.azureedge.net/welcome/static/favicon.png">
+  <title>Correct typos in text</title>
+  <style>
+    :root {
+      --separator: 1px solid #8f9a97;
+      --background: #f5fefc;
+      --toolbar: #c4e4dc;
+      --page-background: #fff;
+      --page-text: #000;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      font-family: system-ui;
+      font-size: 1.1rem;
+      background: var(--background);
+    }
+
+    body {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+    }
+
+    button,
+    input,
+    textarea {
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    header {
+      border-block-end: var(--separator);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: normal;
+      padding: 0.75rem;
+    }
+
+    #toolbar {
+      border-block-end: var(--separator);
+      background-color: var(--toolbar);
+      padding: .75rem;
+    }
+
+    #toolbar button {
+      border: 0;
+      background: transparent;
+      font-weight: normal;
+      border-radius: .25rem;
+    }
+
+    #toolbar button:hover {
+      background: #0003;
+    }
+
+    main {
+      display: grid;
+      padding: 3rem 10vw;
+      overflow-y: scroll;
+    }
+
+    main textarea {
+      width: 100%;
+      aspect-ratio: 21 / 29.7;
+      box-sizing: border-box;
+      font-size: 2.5vw;
+      padding: 8vw;
+      resize: none;
+      overflow: hidden;
+      line-height: 1.5;
+    }
+
+    main textarea:focus-within {
+      outline: none;
+    }
+
+    @media (min-width: 1000px) {
+      main textarea {
+        width: 800px;
+        font-size: 25px;
+        padding: 80px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="button.css">
+</head>
+
+<body>
+  <header>
+    <h1>📄 Untitled document</h1>
+  </header>
+
+  <div id="toolbar">
+    <button>Save</button>
+    <button>Close</button>
+    <button id="autocorrect" class="ai-button">Autocorrect</button>
+  </div>
+
+  <main>
+    <textarea name="editor" id="editor" placeholder="Start typing..." spellcheck="false"></textarea>
+  </main>
+
+  <script src="session.js"></script>
+  <script src="correct-typos.js"></script>
+</body>
+
+</html>
