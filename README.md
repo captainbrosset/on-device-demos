@@ -20,8 +20,6 @@ The webpages in this directory demonstrate how to use the Prompt and Summarizer 
 * **Summarizer API demos**
 
   * [Email thread summarization](summarize-email-thread.html) - Summarize an email thread into a few sentences.
-    
-    ⚠️ **This demo is in progress. I'm switching it from using the Prompt API to using the Summarizer API.**
 
 <!-- ## Requirements to run the demos
 

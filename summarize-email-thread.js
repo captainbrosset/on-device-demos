@@ -49,24 +49,14 @@ async function summarizeThread() {
   const stream = session.summarizeStreaming(messages);
 
   let isFirstChunk = true;
-  let lastTextNode = null;
+
   for await (const chunk of stream) {
     if (isFirstChunk) {
       isFirstChunk = false;
       summaryEl.textContent = "";
     }
 
-    if (chunk.trim() === "") {
-      lastTextNode = null;
-      summaryEl.appendChild(document.createElement("br"));
-    }
-
-    if (lastTextNode) {
-      lastTextNode.textContent += chunk;
-    } else {
-      lastTextNode = document.createTextNode(chunk);
-      summaryEl.appendChild(lastTextNode);
-    }
+    summaryEl.textContent = chunk;
   }
 
   summarizeButton.classList.toggle("processing", false);
