@@ -77,7 +77,7 @@ async function getPromptSession (options) {
   let session = null;
 
   try {
-    session = await window.ai.languageModel.create(Object.assign(defaultPromptSessionOptions, options));
+    session = await window.ai.languageModel.create(Object.assign({}, defaultPromptSessionOptions, options));
   } catch (e) {
     displaySessionMessage(ERR_FAILED_CREATING_MODEL + e, true);
     throw "Can't create model session: " + e;
@@ -108,7 +108,7 @@ async function getSummarizerSession (options) {
   let session = null;
 
   try {
-    session = await window.ai.summarizer.create(Object.assign(defaultSummarizerSessionOptions, options));
+    session = await window.ai.summarizer.create(Object.assign({}, defaultSummarizerSessionOptions, options));
   } catch (e) {
     displaySessionMessage(ERR_FAILED_CREATING_MODEL + e, true);
     throw "Can't create model session: " + e;
