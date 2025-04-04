@@ -1,3 +1,4 @@
+// The various error messages.
 const ERR_PROMPT_API_NOT_DETECTED = "The Prompt API is not available. Please check the <a href='./'>requirements</a> and try again.";
 const ERR_SUMMARIZER_API_NOT_DETECTED = "The Summarizer API is not available. Please check the <a href='./'>requirements</a> and try again.";
 const ERR_PROMPT_MODEL_NOT_AVAILABLE = "The Prompt API is available, but the model is not. Please check the <a href='./'>requirements</a> and try again.";
@@ -5,6 +6,9 @@ const ERR_SUMMARIZER_MODEL_NOT_AVAILABLE = "The Summarizer API is available, but
 const ERR_API_CAPABILITY_ERROR = "Cannot create the model session now. API availability error: ";
 const ERR_FAILED_CREATING_MODEL = "Could not create the language model session. Error: ";
 
+// This session util script displays error/success/progress messages to the user.
+// If the demo page that uses this script already has its own message element, it's used.
+// Otherwise, a new one is created and styled.
 let demoPageHasItsOwnMessage = false;
 function createSessionMessageUI() {
   // In case the demo page already has its own message element.
@@ -22,6 +26,7 @@ function createSessionMessageUI() {
   return message;
 }
 
+// Display a message to the user.
 let sessionMessageEl = null;
 function displaySessionMessage(str, isError = false) {
   if (!sessionMessageEl) {
@@ -36,6 +41,8 @@ function displaySessionMessage(str, isError = false) {
   }
 }
 
+// Utility function to display the model download progress to the user.
+// This method is passed as the `monitor` option when creating a model session.
 const modelDownloadProgressMonitor = m => {
   m.addEventListener("downloadprogress", e => {
     const current = (e.loaded / e.total) * 100;
@@ -46,64 +53,103 @@ const modelDownloadProgressMonitor = m => {
   });
 };
 
+// Default options for the prompt and summarizer sessions.
+// These options can be overridden by the demo page when creating a session.
 const defaultPromptSessionOptions = {
   temperature: 1.0,
   topK: 1,
   monitor: modelDownloadProgressMonitor
 };
-
 const defaultSummarizerSessionOptions = {
   monitor: modelDownloadProgressMonitor
 };
 
-async function getPromptSession (options) {
+// Check if the Prompt API and model are available, and display a message to the user.
+// You can call this function when the page loads if you want to display the status
+// to the user early, so they know what to expect (e.g. if their browser supports the API).
+// This function doesn't trigger the model download and does not create a session.
+async function checkPromptAPIAvailability() {
+  // The API is not implemented in the browser.
   if (!window.ai || !window.ai.languageModel) {
     displaySessionMessage(ERR_PROMPT_API_NOT_DETECTED, true);
-    throw "API not available";
+    throw ERR_PROMPT_API_NOT_DETECTED;
   }
 
   const availability = await window.ai.languageModel.availability();
 
+  // The API is available, but the model is not.
   if (availability === "unavailable") {
     displaySessionMessage(ERR_PROMPT_MODEL_NOT_AVAILABLE, true);
-    throw "Model not available";
+    throw ERR_PROMPT_MODEL_NOT_AVAILABLE;
   }
 
+  // The API and model seem to be available, but the model can't be used for some reason.
   if (availability !== "downloadable" && availability !== "downloading" && availability !== "available") {
     displaySessionMessage(ERR_API_CAPABILITY_ERROR + availability, true);
-    throw "Can't create model session: " + availability;
+    throw ERR_API_CAPABILITY_ERROR + availability;
   }
+
+  // Everything seems to be fine.
+  displaySessionMessage(`Prompt API and model ${availability}`);
+
+  return availability;
+}
+
+// Create a new session for the prompt API, possibly downloading the model first.
+async function getPromptSession(options) {
+  await checkPromptAPIAvailability();
 
   let session = null;
 
+  // Overriding the default options with the ones passed by the demo page.
+  options = Object.assign({}, defaultPromptSessionOptions, options)
+
   try {
-    session = await window.ai.languageModel.create(Object.assign({}, defaultPromptSessionOptions, options));
+    session = await window.ai.languageModel.create(options);
   } catch (e) {
     displaySessionMessage(ERR_FAILED_CREATING_MODEL + e, true);
     throw "Can't create model session: " + e;
   }
 
   displaySessionMessage("API and model ready");
+
   return session;
 }
 
-async function getSummarizerSession (options) {
+// Check if the Summarizer API and model are available, and display a message to the user.
+// You can call this function when the page loads if you want to display the status
+// to the user early, so they know what to expect (e.g. if their browser supports the API).
+// This function doesn't trigger the model download and does not create a session.
+async function checkSummarizerAPIAvailability() {
+  // The API is not implemented in the browser.
   if (!window.ai || !window.ai.summarizer) {
     displaySessionMessage(ERR_SUMMARIZER_API_NOT_DETECTED, true);
-    throw "API not available";
+    throw ERR_SUMMARIZER_API_NOT_DETECTED;
   }
 
   const availability = await window.ai.summarizer.availability();
 
+  // The API is available, but the model is not.
   if (availability == "unavailable") {
     displaySessionMessage(ERR_SUMMARIZER_MODEL_NOT_AVAILABLE, true);
-    throw "Model not available";
+    throw ERR_SUMMARIZER_MODEL_NOT_AVAILABLE;
   }
 
+  // The API and model seem to be available, but the model can't be used for some reason.
   if (availability !== "downloadable" && availability !== "downloading" && availability !== "available") {
     displaySessionMessage(ERR_API_CAPABILITY_ERROR + availability, true);
-    throw "Can't create model session: " + availability;
+    throw ERR_API_CAPABILITY_ERROR + availability;
   }
+
+  // Everything seems to be fine.
+  displaySessionMessage(`Summarizer API and model ${availability}`);
+
+  return availability;
+}
+
+// Create a new session for the summarizer API, possibly downloading the model first.
+async function getSummarizerSession(options) {
+  await checkSummarizerAPIAvailability();
 
   let session = null;
 

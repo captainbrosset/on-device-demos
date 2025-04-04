@@ -5,6 +5,7 @@ const formatEl = document.querySelector("#format");
 const lengthEl = document.querySelector("#length");
 const outputEl = document.querySelector("#output");
 const summarizeBtn = document.querySelector("#summarize");
+const stopBtn = document.querySelector("#stop");
 const spinnerEl = createSpinner();
 
 const DEFAULT_TEXT = `Pablo Ruiz Picasso (25 October 1881 - 8 April 1973) was a Spanish painter, sculptor, printmaker, ceramicist, and theatre designer who spent most of his adult life in France. One of the most influential artists of the 20th century, he is known for co-founding the Cubist movement, the invention of constructed sculpture, the co-invention of collage, and for the wide variety of styles that he helped develop and explore. Among his most famous works are the proto-Cubist Les Demoiselles d'Avignon (1907) and the anti-war painting Guernica (1937), a dramatic portrayal of the bombing of Guernica by German and Italian air forces during the Spanish Civil War.
@@ -22,56 +23,71 @@ const DEFAULT_CONTEXT = "This is a Wikipedia encyclopedia article about Pablo Pi
 textEl.value = DEFAULT_TEXT;
 contextEl.value = DEFAULT_CONTEXT;
 
-addEventListener("load", () => {
-  getSummarizerSession().then((session) => {
-    function getRadioGroupValue(groupEl) {
-      const radios = [...groupEl.querySelectorAll("input")];
-      for (const radio of radios) {
-        if (radio.checked) {
-          return radio.value;
-        }
+addEventListener("load", async () => {
+  await checkSummarizerAPIAvailability();
+
+  let abortController, session;
+
+  stopBtn.addEventListener("click", () => {
+    if (abortController) {
+      abortController.abort("User stopped the summarization");
+    }
+    abortController = null;
+    session.destroy();
+    spinnerEl.remove();
+  });
+
+  function getRadioGroupValue(groupEl) {
+    const radios = [...groupEl.querySelectorAll("input")];
+    for (const radio of radios) {
+      if (radio.checked) {
+        return radio.value;
       }
     }
+  }
 
-    summarizeBtn.addEventListener("click", async () => {
-      if (textEl.value === "") {
-        return;
-      }
+  summarizeBtn.addEventListener("click", async () => {
+    if (textEl.value === "") {
+      return;
+    }
 
-      outputEl.textContent = "Generating summary...";
-      outputEl.appendChild(spinnerEl);
+    outputEl.textContent = "Generating summary...";
+    outputEl.appendChild(spinnerEl);
 
-      // Destroy previous session.
-      session.destroy();
+    // Destroy the previous session, if any.
+    session?.destroy();
 
-      const type = getRadioGroupValue(typeEl);
-      const length = getRadioGroupValue(lengthEl);
-      const format = getRadioGroupValue(formatEl);
-      console.log(`Summarizing with type: ${type}, length: ${length}, format: ${format}`);
+    const type = getRadioGroupValue(typeEl);
+    const length = getRadioGroupValue(lengthEl);
+    const format = getRadioGroupValue(formatEl);
+    console.log(`Summarizing with type: ${type}, length: ${length}, format: ${format}`);
 
-      // Create new session.
-      session = await getSummarizerSession({
-        sharedContext: contextEl.value,
-        type,
-        format,
-        length,
+    // Create a new session.
+    session = await getSummarizerSession({
+      sharedContext: contextEl.value,
+      type,
+      format,
+      length,
+    });
+
+    try {
+      abortController = new AbortController();
+      const stream = session.summarizeStreaming(textEl.value, {
+        signal: abortController.signal
       });
 
-      try {
-        const stream = session.summarizeStreaming(textEl.value);
-        let isFirstChunk = true;
-        for await (const chunk of stream) {
-          if (isFirstChunk) {
-            spinnerEl.remove();
-            isFirstChunk = false;
-          }
-          outputEl.textContent = chunk;
+      let isFirstChunk = true;
+      for await (const chunk of stream) {
+        if (isFirstChunk) {
+          spinnerEl.remove();
+          isFirstChunk = false;
         }
-      } catch (e) {
-        displaySessionMessage(`Could not summarize the text: ${e}`, true);
-        console.error(e);
-        spinnerEl.remove();
+        outputEl.textContent = chunk;
       }
-    });
+    } catch (e) {
+      displaySessionMessage(`Could not summarize the text: ${e}`, true);
+      console.error(e);
+      spinnerEl.remove();
+    }
   });
 });

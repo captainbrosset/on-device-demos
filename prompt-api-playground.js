@@ -65,89 +65,89 @@ function linkRangewithNumber(rangeEl, numberEl) {
 linkRangewithNumber(temperatureEl, temperatureEl.nextElementSibling);
 linkRangewithNumber(topKEl, topKEl.nextElementSibling);
 
-addEventListener("load", () => {
-  getPromptSession().then((session) => {
-    let abortController;
+addEventListener("load", async () => {
+  await checkPromptAPIAvailability();
 
-    stopBtn.addEventListener("click", () => {
-      if (abortController) {
-        abortController.abort("User stopped the conversation");
-      }
-      abortController = null;
-      session.destroy();
+  let abortController, session;
+
+  stopBtn.addEventListener("click", () => {
+    if (abortController) {
+      abortController.abort("User stopped the conversation");
+    }
+    abortController = null;
+    session.destroy();
+    spinnerEl.remove();
+  });
+
+  runBtn.addEventListener("click", async () => {
+    if (promptEl.value === "") {
+      return;
+    }
+
+    outputEl.textContent = "Generating response...";
+    outputEl.appendChild(spinnerEl);
+
+    // Destroy the previous session, if any.
+    session?.destroy();
+
+    const temperature = parseFloat(temperatureEl.value);
+    const topK = parseInt(topKEl.value);
+    const systemPrompt = systemPromptEl.value ? systemPromptEl.value.trim() : undefined;
+    const initialPrompts = initialPromptsEl.value ? JSON.parse(initialPromptsEl.value) : undefined;
+    console.log("Prompting with the following settings", { temperature, topK, systemPrompt, initialPrompts });
+
+    const startTime = performance.now();
+
+    // Create a new session.
+    try {
+      session = await getPromptSession({
+        temperature,
+        topK,
+        systemPrompt,
+        initialPrompts,
+      });
+    } catch (e) {
+      displaySessionMessage(`Could not create session: ${e}`, true);
+      console.error(e);
       spinnerEl.remove();
-    });
+      return;
+    }
 
-    runBtn.addEventListener("click", async () => {
-      if (promptEl.value === "") {
-        return;
-      }
+    const modelCreatedTime = performance.now();
 
-      outputEl.textContent = "Generating response...";
-      outputEl.appendChild(spinnerEl);
+    initLatencyMetricEl.innerText = Math.round(modelCreatedTime - startTime);
 
-      // Destroy previous session.
-      session.destroy();
+    try {
+      abortController = new AbortController();
+      const stream = session.promptStreaming(promptEl.value, {
+        signal: abortController.signal
+      });
 
-      const temperature = parseFloat(temperatureEl.value);
-      const topK = parseInt(topKEl.value);
-      const systemPrompt = systemPromptEl.value ? systemPromptEl.value.trim() : undefined;
-      const initialPrompts = initialPromptsEl.value ? JSON.parse(initialPromptsEl.value) : undefined;
-      console.log("Prompting", { temperature, topK, systemPrompt, initialPrompts });
+      const streamStartTime = performance.now();
+      let isFirstChunk = true;
+      let count = 0;
 
-      const startTime = performance.now();
-
-      // Create new session.
-      try {
-        session = await getPromptSession({
-          temperature,
-          topK,
-          systemPrompt,
-          initialPrompts,
-        });
-      } catch (e) {
-        displaySessionMessage(`Could not create session: ${e}`, true);
-        console.error(e);
-        spinnerEl.remove();
-        return;
-      }
-
-      const modelCreatedTime = performance.now();
-
-      initLatencyMetricEl.innerText = Math.round(modelCreatedTime - startTime);
-
-      try {
-        abortController = new AbortController();
-        const stream = session.promptStreaming(promptEl.value, {
-          signal: abortController.signal
-        });
-        
-        const streamStartTime = performance.now();
-        let isFirstChunk = true;
-        let count = 0;
-
-        for await (const chunk of stream) {
-          if (isFirstChunk) {
-            const timeToFirstChunk = performance.now() - streamStartTime;
-            firstChunkLatencyMetricEl.innerText = Math.round(timeToFirstChunk);
-            spinnerEl.remove();
-            isFirstChunk = false;
-            outputEl.textContent = "";
-          }
-
-          count++;
-          chunksMetricEl.innerText = count;
-          
-          const rate = count / ((performance.now() - streamStartTime) / 1000);
-          chunkRateMetricEl.innerText = rate.toFixed(1);``
-
-          outputEl.textContent += chunk;
+      for await (const chunk of stream) {
+        if (isFirstChunk) {
+          const timeToFirstChunk = performance.now() - streamStartTime;
+          firstChunkLatencyMetricEl.innerText = Math.round(timeToFirstChunk);
+          spinnerEl.remove();
+          isFirstChunk = false;
+          outputEl.textContent = "";
         }
-      } catch (e) {
-        displaySessionMessage(`Could not generate a response: ${e}`, true);
-        console.error(e);
-        spinnerEl.remove();
+
+        count++;
+        chunksMetricEl.innerText = count;
+
+        const rate = count / ((performance.now() - streamStartTime) / 1000);
+        chunkRateMetricEl.innerText = rate.toFixed(1);
+
+        outputEl.textContent += chunk;
       }
-    });
+    } catch (e) {
+      displaySessionMessage(`Could not generate a response: ${e}`, true);
+      console.error(e);
+      spinnerEl.remove();
+    }
   });
 });
