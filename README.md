@@ -21,6 +21,10 @@ The webpages in this directory demonstrate how to use the Prompt and Summarizer 
 
   * [Email thread summarization](summarize-email-thread.html) - Summarize an email thread into a few sentences.
 
+* **Combined demos***
+
+  * [Travel assistant](travel-assistant.html) - A travel assistant that helps you plan a trip by retrieving the weather forecast and events happening at your destination, and then summarizing the information.
+
 <!-- ## Requirements to run the demos
 
 To run the above demos, make sure that you meet the following requirements:

@@ -3,7 +3,7 @@
 // To show the spinner, append the element returned by createSpinner() to the DOM.
 // To hide the spinner, remove it from the DOM.
 
-function createSpinner() {
+function createSpinner(id) {
   // <div class="progress">
   //   <div class="spinner">
   //     <div class="start">
@@ -14,6 +14,7 @@ function createSpinner() {
   //     </div>
   //   </div>
   // </div>
+  
   const spinner = document.createElement("div");
   spinner.className = "progress";
   const spinnerEl = document.createElement("div");
@@ -31,5 +32,10 @@ function createSpinner() {
   spinnerEl.appendChild(startEl);
   spinnerEl.appendChild(endEl);
   spinner.appendChild(spinnerEl);
+
+  if (id) {
+    spinner.id = id;
+  }
+
   return spinner;
 }
