@@ -64,18 +64,26 @@ const defaultSummarizerSessionOptions = {
   monitor: modelDownloadProgressMonitor
 };
 
+function getLanguageModelAPI() {
+  if (window.LanguageModel) {
+    return window.LanguageModel;
+  }
+
+  if (window.ai && window.ai.languageModel) {
+    return window.ai.languageModel;
+  }
+
+  displaySessionMessage(ERR_PROMPT_API_NOT_DETECTED, true);
+  throw ERR_PROMPT_API_NOT_DETECTED;
+}
+
 // Check if the Prompt API and model are available, and display a message to the user.
 // You can call this function when the page loads if you want to display the status
 // to the user early, so they know what to expect (e.g. if their browser supports the API).
 // This function doesn't trigger the model download and does not create a session.
 async function checkPromptAPIAvailability() {
-  // The API is not implemented in the browser.
-  if (!window.ai || !window.ai.languageModel) {
-    displaySessionMessage(ERR_PROMPT_API_NOT_DETECTED, true);
-    throw ERR_PROMPT_API_NOT_DETECTED;
-  }
-
-  const availability = await window.ai.languageModel.availability();
+  const languageModel = getLanguageModelAPI();
+  const availability = await languageModel.availability();
 
   // The API is available, but the model is not.
   if (availability === "unavailable") {
@@ -98,6 +106,7 @@ async function checkPromptAPIAvailability() {
 // Create a new session for the prompt API, possibly downloading the model first.
 async function getPromptSession(options) {
   await checkPromptAPIAvailability();
+  const languageModel = getLanguageModelAPI();
 
   let session = null;
 
@@ -105,7 +114,7 @@ async function getPromptSession(options) {
   options = Object.assign({}, defaultPromptSessionOptions, options)
 
   try {
-    session = await window.ai.languageModel.create(options);
+    session = await languageModel.create(options);
   } catch (e) {
     displaySessionMessage(ERR_FAILED_CREATING_MODEL + e, true);
     throw "Can't create model session: " + e;
@@ -116,18 +125,26 @@ async function getPromptSession(options) {
   return session;
 }
 
+function getSummarizerAPI() {
+  if (window.Summarizer) {
+    return window.Summarizer;
+  }
+
+  if (window.ai && window.ai.summarizer) {
+    return window.ai.summarizer;
+  }
+
+  displaySessionMessage(ERR_SUMMARIZER_API_NOT_DETECTED, true);
+  throw ERR_SUMMARIZER_API_NOT_DETECTED;
+}
+
 // Check if the Summarizer API and model are available, and display a message to the user.
 // You can call this function when the page loads if you want to display the status
 // to the user early, so they know what to expect (e.g. if their browser supports the API).
 // This function doesn't trigger the model download and does not create a session.
 async function checkSummarizerAPIAvailability() {
-  // The API is not implemented in the browser.
-  if (!window.ai || !window.ai.summarizer) {
-    displaySessionMessage(ERR_SUMMARIZER_API_NOT_DETECTED, true);
-    throw ERR_SUMMARIZER_API_NOT_DETECTED;
-  }
-
-  const availability = await window.ai.summarizer.availability();
+  const summarizer = getSummarizerAPI();
+  const availability = await summarizer.availability();
 
   // The API is available, but the model is not.
   if (availability == "unavailable") {
@@ -150,11 +167,12 @@ async function checkSummarizerAPIAvailability() {
 // Create a new session for the summarizer API, possibly downloading the model first.
 async function getSummarizerSession(options) {
   await checkSummarizerAPIAvailability();
+  const summarizer = getSummarizerAPI();
 
   let session = null;
 
   try {
-    session = await window.ai.summarizer.create(Object.assign({}, defaultSummarizerSessionOptions, options));
+    session = await summarizer.create(Object.assign({}, defaultSummarizerSessionOptions, options));
   } catch (e) {
     displaySessionMessage(ERR_FAILED_CREATING_MODEL + e, true);
     throw "Can't create model session: " + e;
