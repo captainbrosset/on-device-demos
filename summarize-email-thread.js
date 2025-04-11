@@ -56,7 +56,7 @@ async function summarizeThread() {
       summaryEl.textContent = "";
     }
 
-    summaryEl.textContent = chunk;
+    summaryEl.textContent += chunk;
   }
 
   summarizeButton.classList.toggle("processing", false);

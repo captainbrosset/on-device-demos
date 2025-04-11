@@ -68,7 +68,9 @@ linkRangewithNumber(topKEl, topKEl.nextElementSibling);
 addEventListener("load", async () => {
   await checkPromptAPIAvailability();
 
-  let abortController, session;
+  // Getting a session to show the download progress.
+  let session = await getPromptSession();
+  let abortController;
 
   stopBtn.addEventListener("click", () => {
     if (abortController) {

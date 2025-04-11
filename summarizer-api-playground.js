@@ -25,8 +25,9 @@ contextEl.value = DEFAULT_CONTEXT;
 
 addEventListener("load", async () => {
   await checkSummarizerAPIAvailability();
+  let session = await getSummarizerSession();
 
-  let abortController, session;
+  let abortController
 
   stopBtn.addEventListener("click", () => {
     if (abortController) {
@@ -81,8 +82,9 @@ addEventListener("load", async () => {
         if (isFirstChunk) {
           spinnerEl.remove();
           isFirstChunk = false;
+          outputEl.textContent = "";
         }
-        outputEl.textContent = chunk;
+        outputEl.textContent += chunk;
       }
     } catch (e) {
       displaySessionMessage(`Could not summarize the text: ${e}`, true);
