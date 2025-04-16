@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="https://edgestatic.azureedge.net/welcome/static/favicon.png">
+  <title>Prompt API playground</title>
+  <link rel="stylesheet" href="button.css">
+  <link rel="stylesheet" href="design.css">
+  <link rel="stylesheet" href="spinner.css">
+  <link rel="stylesheet" href="product-review.css">
+</head>
+
+<body>
+  <header>
+    <h1>Shoes Inc.</h1>
+
+    <nav>
+      <ul>
+        <li><a href="#">New products</a></li>
+        <li><a href="#">All products</a></li>
+        <li><a href="#">Sale</a></li>
+        <li><a href="#">Your basket</a></li>
+      </ul>
+    </nav>
+
+    <search>
+      <form onsubmit="event.preventDefault();" id="search">
+        <input type="search" id="search-input" placeholder="Search for products..." aria-label="Search for products">
+      </form>
+    </search>
+  </header>
+
+  <main class="product">
+    <div class="product-details card-with-shadow">
+      <h2>Waterproof hiking boots</h2>
+
+      <div class="price">$160.00</div>
+
+      <p class="product-description">
+        These waterproof hiking boots are perfect for your next adventure. They are made with durable materials and have
+        a comfortable fit. The non-slip sole provides excellent traction on any terrain, making them ideal for hiking,
+        camping, or any outdoor activity.
+        <br>
+        These boots are designed to keep your feet dry and comfortable, even in wet conditions. The breathable lining
+        ensures that your feet stay cool and dry, while the cushioned insole provides support for long hikes. The rugged
+        outsole offers excellent grip on slippery surfaces, making these boots a must-have for any outdoor enthusiast.
+      </p>
+
+      <h3>Colors</h3>
+
+      <ul class="product-colors">
+        <li class="color" data-color="#e49539" selected></li>
+        <li class="color" data-color="#4d4c51"></li>
+        <li class="color" data-color="#985135"></li>
+      </ul>
+
+      <h3>Sizes</h3>
+
+      <ul class="product-sizes">
+        <li class="size" unavailable>7</li>
+        <li class="size">7.5</li>
+        <li class="size">8</li>
+        <li class="size">8.5</li>
+        <li class="size">9</li>
+        <li class="size">9.5</li>
+        <li class="size" unavailable>10</li>
+        <li class="size">10.5</li>
+        <li class="size">11</li>
+        <li class="size" unavailable>11.5</li>
+        <li class="size">12</li>
+        <li class="size">13</li>
+      </ul>
+    </div>
+
+    <div class="product-images">
+      <img src="product-picture-1.png" alt="A picture of the product.">
+      <img src="product-picture-2.png" alt="A picture of the product.">
+      <img src="product-picture-3.png" alt="A picture of the product.">
+      <img src="product-picture-4.png" alt="A picture of the product.">
+    </div>
+
+    <form onsubmit="event.preventDefault();" id="add-to-basket">
+      <button type="submit">Add to basket</button>
+    </form>
+  </main>
+
+  <aside class="reviews">
+    <div class="current-reviews">
+      <h2>
+        User reviews (7)
+      </h2>
+      
+      <div class="star-rating" data-rating="3.7"></div>
+
+      <div class="summarize-reviews">
+        <button id="summarize-reviews" disabled>Summarize reviews</button>
+        <span class="system-check" id="review-summary-check">Checking if your system supports summarizing reviews ...</span>
+        <div class="summary" id="review-summary-output"></div>
+      </div>
+
+      <ul class="user-reviews">
+        <li lang="en">
+          <h3 class="review-title">Very sturdy!</h3>
+          <p class="review-description">I bought these boots for a hiking trip and they held up great. The grip was
+            excellent on rocky terrain and they kept my feet dry in the rain.</p>
+          <div class="star-rating" data-rating="4"></div>
+        </li>
+        <li lang="en">
+          <h3 class="review-title">Great for the price</h3>
+          <p class="review-description">I was surprised at how comfortable these boots are for the price. They fit well
+            and are very lightweight.</p>
+          <div class="star-rating" data-rating="3"></div>
+        </li>
+        <li lang="en">
+          <h3 class="review-title">Comfortable but not completely waterproof</h3>
+          <p class="review-description">I do a lot of hiking and these boots are very comfortable. However, they are not
+            completely waterproof. My feet got wet during a recent hike in the rain.</p>
+          <div class="star-rating" data-rating="2"></div>
+        </li>
+        <li lang="fr">
+          <h3 class="review-title">J'adore !</h3>
+          <p class="review-description">
+            Ces chaussures de marche sont absolument incroyables ! Elles sont incroyablement confortables et élégantes.
+            Je les ai portées lors d'une longue randonnée et mes pieds se sont sentis bien tout le temps. Je les
+            recommande vivement !
+            <!-- TODO: model is not able to translate yet <button>Translate review</button> -->
+          </p>
+          <div class="star-rating" data-rating="5"></div>
+        </li>
+        <li lang="es">
+          <h3 class="review-title">¡Increíble!</h3>
+          <p class="review-description">
+            ¡Los he tenido durante casi 5 años y hago caminatas al menos 3 o 4 veces al año (principalmente en
+            condiciones secas). ¡Todavía están en excelentes condiciones y me encantan! ¡Los recomendaría a cualquiera
+            que busque un buen par de botas de senderismo!
+            <!-- TODO: model is not able to translate yet <button>Translate review</button> -->
+          </p>
+          <div class="star-rating" data-rating="4"></div>
+        </li>
+        <li lang="en">
+          <h3 class="review-title">Great for hiking</h3>
+          <p class="review-description">
+            I took these boots on a week-long hiking trip and they were fantastic. They provided great support and
+            comfort,
+            even on long hikes.</p>
+          <div class="star-rating" data-rating="5"></div>
+        </li>
+        <li lang="es">
+          <h3 class="review-title">¡No son impermeables!</h3>
+          <p class="review-description">
+            Compré estas botas para una caminata en la lluvia y mis pies se empaparon. Son cómodas, pero no son
+            impermeables.
+            <!-- TODO: model is not able to translate yet <button>Translate review</button> -->
+          </p>
+          <div class="star-rating" data-rating="3"></div>
+        </li>
+      </ul>
+    </div>
+
+    <form onsubmit="event.preventDefault();" id="review-form">
+      <h3>Write a review</h3>
+
+      <div class="message-bar"></div>
+
+      <label for="review-headline">Headline</label>
+      <input type="text" id="review-title" placeholder="The most important aspect of this product" required>
+
+      <label for="review-description">Description</label>
+      <textarea id="review-description" placeholder="Enter a description for your review" required></textarea>
+
+      <label for="review-rating">Rating</label>
+      <div class="star-rating" id="review-rating-0" data-rating="0" tabindex="0"></div>
+      <div class="star-rating" id="review-rating-1" data-rating="1" tabindex="0"></div>
+      <div class="star-rating" id="review-rating-2" data-rating="2" tabindex="0"></div>
+      <div class="star-rating" id="review-rating-3" data-rating="3" tabindex="0"></div>
+      <div class="star-rating" id="review-rating-4" data-rating="4" tabindex="0"></div>
+      <div class="star-rating" id="review-rating-5" data-rating="5" tabindex="0"></div>
+
+      <button type="submit">Submit review</button>
+      <span class="system-check" id="review-moderation-check"></span>
+    </form>
+  </aside>
+
+  <footer>
+    <h3>Shoes Inc. &copy; 2025</h3>
+    <nav>
+      <ul>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Contact us</a></li>
+        <li><a href="#">Privacy policy</a></li>
+        <li><a href="#">Terms of service</a></li>
+      </ul>
+    </nav>
+  </footer>
+
+  <script src="session.js"></script>
+  <script src="spinner.js"></script>
+  <script src="product-review.js"></script>
+</body>
+
+</html>

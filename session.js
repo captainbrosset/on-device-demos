@@ -20,6 +20,7 @@ function createSessionMessageUI() {
 
   // Otherwise, create a new one, and style it.
   const message = document.createElement("div");
+  message.className = "ai-session-message-ui";
   message.style =
     "font-family:system-ui;font-size:1rem;color:black;position:fixed;top:.25rem;right:.25rem;background:#eee;padding:.5rem;border-radius:.25rem;max-width:20rem;box-shadow:0 0 .5rem 0 #0005;";
   document.body.appendChild(message);
