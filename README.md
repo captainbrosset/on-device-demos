@@ -24,6 +24,7 @@ The webpages in this directory demonstrate how to use the Prompt and Summarizer 
 * **Combined demos***
 
   * [Travel assistant](travel-assistant.html) - A travel assistant that helps you plan a trip by retrieving the weather forecast and events happening at your destination, and then summarizing the information.
+  * [Product review](product-review.html) - A shopping website. User reviews can be summarized, and new reviews are moderated.
 
 <!-- ## Requirements to run the demos
 
