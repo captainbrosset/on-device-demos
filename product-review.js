@@ -8,6 +8,27 @@ const moderationSystemCheckEl = document.querySelector("#review-moderation-check
 const reviewTitleEl = reviewFormEl.querySelector("#review-title");
 const reviewDescriptionEl = reviewFormEl.querySelector("#review-description");
 const reviewMessageEl = reviewFormEl.querySelector(".message-bar");
+const reviewCountEl = document.querySelector("#review-count");
+const averageRatingEl = document.querySelector("#average-rating");
+
+function addReview(headline, description, lang, rating) {
+  const li = document.createElement("li");
+  li.setAttribute("lang", lang);
+  li.innerHTML = `<h3 class="review-title">${headline}</h3>
+    <p class="review-description">${description}</p>
+    <div class="star-rating" data-rating="${rating}"></div>
+  `;
+  userReviewsEl.prepend(li);
+
+  reviewCountEl.textContent = userReviewsEl.querySelectorAll("li").length;
+
+  const ratingAverage = [...userReviewsEl.querySelectorAll(".star-rating")].reduce((acc, r) => {
+    const rating = parseInt(r.dataset.rating, 10);
+    return acc + rating;
+  }, 0) / userReviewsEl.querySelectorAll(".star-rating").length;
+
+  averageRatingEl.dataset.rating = ratingAverage.toFixed(1);
+}
 
 addEventListener("DOMContentLoaded", async () => {
   reviewFormEl.addEventListener("click", e => {
@@ -124,12 +145,13 @@ addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
+    reviewMessageEl.textContent = "";
     moderateReviewBtn.setAttribute("disabled", "true");
     moderateReviewBtn.textContent = "Checking review...";
     const text = `${reviewTitleEl.value}. ${reviewDescriptionEl.value}`;
 
     const promptSession = await promptSessionPromise;
-    // Clone the session each time, we don't need to continue the previous session.
+    // Clone the session each time, we don't want previous results to affect this next one.
     const newSession = await promptSession.clone();
     const response = await newSession.prompt(text);
 
@@ -137,6 +159,8 @@ addEventListener("DOMContentLoaded", async () => {
       reviewMessageEl.textContent = "Thank you for your review!";
       reviewMessageEl.classList.add("success");
       reviewMessageEl.classList.remove("error");
+
+      addReview(reviewTitleEl.value, reviewDescriptionEl.value, "en", reviewFormEl.querySelector(".star-rating[selected]")?.dataset.rating);
     } else {
       reviewMessageEl.textContent = "Your review is not acceptable as written. Please refrain from using toxic, hateful, or abusive language.";
       reviewMessageEl.classList.add("error");

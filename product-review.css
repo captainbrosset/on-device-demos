@@ -122,6 +122,18 @@ header nav a:hover {
   object-fit: cover;
 }
 
+/* For extra wide screens */
+@media (min-width: 2000px) {
+  .product .product-images img {
+    max-width: 300px;
+  }
+}
+@media (min-height: 1000px) {
+  .product .product-images img {
+    max-height: 300px;
+  }
+}
+
 .product .product-description {
   line-height: 1.6;
 }

@@ -51,26 +51,26 @@
       <h3>Colors</h3>
 
       <ul class="product-colors">
-        <li class="color" data-color="#e49539" selected></li>
-        <li class="color" data-color="#4d4c51"></li>
-        <li class="color" data-color="#985135"></li>
+        <li class="color" title="Color Mustard" data-color="#e49539" selected></li>
+        <li class="color" title="Color Gray" data-color="#4d4c51"></li>
+        <li class="color" title="Color Brown" data-color="#985135"></li>
       </ul>
 
       <h3>Sizes</h3>
 
       <ul class="product-sizes">
-        <li class="size" unavailable>7</li>
-        <li class="size">7.5</li>
-        <li class="size">8</li>
-        <li class="size">8.5</li>
-        <li class="size">9</li>
-        <li class="size">9.5</li>
-        <li class="size" unavailable>10</li>
-        <li class="size">10.5</li>
-        <li class="size">11</li>
-        <li class="size" unavailable>11.5</li>
-        <li class="size">12</li>
-        <li class="size">13</li>
+        <li class="size" title="Size 7 is unavailable" unavailable>7</li>
+        <li class="size" title="Size 7.5">7.5</li>
+        <li class="size" title="Size 8">8</li>
+        <li class="size" title="Size 8.5">8.5</li>
+        <li class="size" title="Size 9">9</li>
+        <li class="size" title="Size 9.5">9.5</li>
+        <li class="size" title="Size 10 is unavailable" unavailable>10</li>
+        <li class="size" title="Size 10.5">10.5</li>
+        <li class="size" title="Size 11">11</li>
+        <li class="size" title="Size 11.5 is unavailable" unavailable>11.5</li>
+        <li class="size" title="Size 12">12</li>
+        <li class="size" title="Size 13">13</li>
       </ul>
     </div>
 
@@ -89,14 +89,15 @@
   <aside class="reviews">
     <div class="current-reviews">
       <h2>
-        User reviews (7)
+        User reviews (<span id="review-count">7</span>)
       </h2>
-      
-      <div class="star-rating" data-rating="3.7"></div>
+
+      <div class="star-rating" data-rating="3.7" id="average-rating"></div>
 
       <div class="summarize-reviews">
         <button id="summarize-reviews" disabled>Summarize reviews</button>
-        <span class="system-check" id="review-summary-check">Checking if your system supports summarizing reviews ...</span>
+        <span class="system-check" id="review-summary-check">Checking if your system supports summarizing reviews
+          ...</span>
         <div class="summary" id="review-summary-output"></div>
       </div>
 
@@ -119,23 +120,20 @@
             completely waterproof. My feet got wet during a recent hike in the rain.</p>
           <div class="star-rating" data-rating="2"></div>
         </li>
-        <li lang="fr">
-          <h3 class="review-title">J'adore !</h3>
+        <li lang="en">
+          <h3 class="review-title">Love em!</h3>
           <p class="review-description">
-            Ces chaussures de marche sont absolument incroyables ! Elles sont incroyablement confortables et élégantes.
-            Je les ai portées lors d'une longue randonnée et mes pieds se sont sentis bien tout le temps. Je les
-            recommande vivement !
-            <!-- TODO: model is not able to translate yet <button>Translate review</button> -->
+            These hiking shoes are absolutely amazing! They are incredibly comfortable and stylish. I wore them on a
+            long hike, and my feet felt great the entire time. I highly recommend them!
           </p>
           <div class="star-rating" data-rating="5"></div>
         </li>
-        <li lang="es">
-          <h3 class="review-title">¡Increíble!</h3>
+        <li lang="en">
+          <h3 class="review-title">Incredible!</h3>
           <p class="review-description">
-            ¡Los he tenido durante casi 5 años y hago caminatas al menos 3 o 4 veces al año (principalmente en
-            condiciones secas). ¡Todavía están en excelentes condiciones y me encantan! ¡Los recomendaría a cualquiera
-            que busque un buen par de botas de senderismo!
-            <!-- TODO: model is not able to translate yet <button>Translate review</button> -->
+            I've had them for almost 5 years and go hiking at least 3 or 4 times a year (mainly in dry conditions). They
+            are still in excellent condition and I love them! I would recommend them to anyone looking for a good pair
+            of hiking boots!
           </p>
           <div class="star-rating" data-rating="4"></div>
         </li>
@@ -147,12 +145,11 @@
             even on long hikes.</p>
           <div class="star-rating" data-rating="5"></div>
         </li>
-        <li lang="es">
-          <h3 class="review-title">¡No son impermeables!</h3>
+        <li lang="en">
+          <h3 class="review-title">These aren't waterproof!</h3>
           <p class="review-description">
-            Compré estas botas para una caminata en la lluvia y mis pies se empaparon. Son cómodas, pero no son
-            impermeables.
-            <!-- TODO: model is not able to translate yet <button>Translate review</button> -->
+            I bought these boots for a hike in the rain and my feet got soaked. They are comfortable, but they are not
+            waterproof.
           </p>
           <div class="star-rating" data-rating="3"></div>
         </li>
@@ -165,10 +162,10 @@
       <div class="message-bar"></div>
 
       <label for="review-headline">Headline</label>
-      <input type="text" id="review-title" placeholder="The most important aspect of this product" required>
+      <input type="text" id="review-title" placeholder="The key point to know" required>
 
       <label for="review-description">Description</label>
-      <textarea id="review-description" placeholder="Enter a description for your review" required></textarea>
+      <textarea id="review-description" placeholder="A longer review of this product" required></textarea>
 
       <label for="review-rating">Rating</label>
       <div class="star-rating" id="review-rating-0" data-rating="0" tabindex="0"></div>
