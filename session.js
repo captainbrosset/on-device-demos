@@ -1,8 +1,8 @@
 // The various error messages.
-const ERR_PROMPT_API_NOT_DETECTED = "The Prompt API is not available. Please check the <a href='./'>requirements</a> and try again.";
-const ERR_SUMMARIZER_API_NOT_DETECTED = "The Summarizer API is not available. Please check the <a href='./'>requirements</a> and try again.";
-const ERR_PROMPT_MODEL_NOT_AVAILABLE = "The Prompt API is available, but the model is not. Please check the <a href='./'>requirements</a> and try again.";
-const ERR_SUMMARIZER_MODEL_NOT_AVAILABLE = "The Summarizer API is available, but the model is not. Please check the <a href='./'>requirements</a> and try again.";
+const ERR_PROMPT_API_NOT_DETECTED = "The Prompt API is not available. Please check the <a href='https://learn.microsoft.com/microsoft-edge/web-platform/prompt-api'>documentation</a> and try again.";
+const ERR_SUMMARIZER_API_NOT_DETECTED = "The Summarizer API is not available. Please check the <a href='https://learn.microsoft.com/microsoft-edge/web-platform/prompt-api'>documentation</a> and try again.";
+const ERR_PROMPT_MODEL_NOT_AVAILABLE = "The Prompt API is available, but the model is not. Please check the <a href='https://learn.microsoft.com/microsoft-edge/web-platform/prompt-api'>documentation</a> and try again.";
+const ERR_SUMMARIZER_MODEL_NOT_AVAILABLE = "The Summarizer API is available, but the model is not. Please check the <a href='https://learn.microsoft.com/microsoft-edge/web-platform/prompt-api'>documentation</a> and try again.";
 const ERR_API_CAPABILITY_ERROR = "Cannot create the model session now. API availability error: ";
 const ERR_FAILED_CREATING_MODEL = "Could not create the language model session. Error: ";
 
