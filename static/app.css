@@ -1,6 +1,9 @@
 body {
   display: flex;
   gap: var(--gap);
+  max-width: 1350px;
+  margin: var(--padding) auto;
+  padding: 0 var(--padding);
 }
 
 header {

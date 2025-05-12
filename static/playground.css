@@ -1,6 +1,5 @@
 main {
-  max-width: 800px;
-  /* margin: var(--space-from-edge) auto; */
+  width: clamp(400px, 70vw, 1000px);
   display: grid;
   gap: var(--gap);
   grid-template-rows: min-content min-content 1fr;
@@ -14,6 +13,7 @@ main {
 
 @media (max-width: 800px) {
   main {
+    width: 100%;
     grid-template-columns: 1fr;
     grid-template-rows: min-content min-content min-content auto min-content auto;
     grid-template-areas:
