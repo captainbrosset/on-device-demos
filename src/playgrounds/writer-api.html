@@ -1,0 +1,44 @@
+---
+layout: playground.njk
+title: Writer API playground
+shorttitle: Writer
+description: Generate text based on a description of what you want to write.
+stylesheet: writer-api.css
+script: writer-api.js
+---
+
+<div class="settings-row">
+  <label for="task">Description of the text to write</label>
+  <textarea spellcheck="false" id="task">A draft for an inquiry to my bank about how to enable wire transfers on my account</textarea>
+</div>
+
+<div class="settings-row no-separator">
+  <label for="tone">Tone</label>
+  <select name="tone" id="tone">
+    <option value="formal">Formal</option>
+    <option value="neutral" selected>Neutral</option>
+    <option value="casual">Casual</option>
+  </select>
+</div>
+
+<div class="settings-row no-separator">
+  <label for="length">Length</label>
+  <select name="length" id="length">
+    <option value="short" selected>Short</option>
+    <option value="medium">Medium</option>
+    <option value="long">Long</option>
+  </select>
+</div>
+
+<div class="settings-row">
+  <label for="format">Format</label>
+  <select name="format" id="format">
+    <option value="markdown" selected>Markdown</option>
+    <option value="plain-text">Plain text</option>
+  </select>
+</div>
+
+<div class="settings-row submit">
+  <button class="ai-button" id="write">Write</button>
+  <button id="stop">Stop</button>
+</div>

@@ -38,15 +38,6 @@ addEventListener("load", async () => {
     spinnerEl.remove();
   });
 
-  function getRadioGroupValue(groupEl) {
-    const radios = [...groupEl.querySelectorAll("input")];
-    for (const radio of radios) {
-      if (radio.checked) {
-        return radio.value;
-      }
-    }
-  }
-
   summarizeBtn.addEventListener("click", async () => {
     if (textEl.value === "") {
       return;
@@ -58,24 +49,38 @@ addEventListener("load", async () => {
     // Destroy the previous session, if any.
     session?.destroy();
 
-    const type = getRadioGroupValue(typeEl);
-    const length = getRadioGroupValue(lengthEl);
-    const format = getRadioGroupValue(formatEl);
+    const type = typeEl.value;
+    const length = lengthEl.value;
+    const format = formatEl.value;
     console.log(`Summarizing with type: ${type}, length: ${length}, format: ${format}`);
 
+    const metrics = new PlaygroundMetrics();
+    metrics.signalOnBeforeCreateSession();
+
     // Create a new session.
-    session = await getSummarizerSession({
-      sharedContext: contextEl.value,
-      type,
-      format,
-      length,
-    });
+    try {
+      session = await getSummarizerSession({
+        sharedContext: contextEl.value,
+        type,
+        format,
+        length,
+      });
+    } catch (e) {
+      displaySessionMessage(`Could not create the Summarizer session: ${e}`, true);
+      console.error(e);
+      spinnerEl.remove();
+      return;
+    }
+
+    metrics.signalOnAfterSessionCreated();
 
     try {
       abortController = new AbortController();
       const stream = session.summarizeStreaming(textEl.value, {
         signal: abortController.signal
       });
+
+      metrics.signalOnBeforeStream();
 
       let isFirstChunk = true;
       for await (const chunk of stream) {
@@ -84,6 +89,9 @@ addEventListener("load", async () => {
           isFirstChunk = false;
           outputEl.textContent = "";
         }
+
+        metrics.signalOnStreamChunk();
+
         outputEl.textContent += chunk;
       }
     } catch (e) {

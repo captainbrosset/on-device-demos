@@ -1,0 +1,21 @@
+textarea {
+  height: 5rem;
+}
+
+textarea#initial-prompts {
+  font-size: .9em;
+  height: 10rem;
+}
+
+#n-shot-example {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#n-shot-example:hover {
+  text-decoration: none;
+}
+
+#output:empty::before {
+  content: "The response will appear here";
+}

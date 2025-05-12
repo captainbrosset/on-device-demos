@@ -401,7 +401,7 @@ header nav a:hover {
   height: var(--star-size);
   line-height: 1;
   
-  background-image: url(star.png);
+  background-image: url(./images/star.png);
   background-repeat: repeat-x;
   background-size: var(--star-size);
   

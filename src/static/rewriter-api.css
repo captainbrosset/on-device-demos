@@ -1,0 +1,3 @@
+#output:empty::before {
+  content: "The rewritten text will appear here";
+}

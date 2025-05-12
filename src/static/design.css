@@ -28,6 +28,11 @@ body {
   margin: var(--padding);
 }
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #0005 transparent;
+}
+
 button,
 input,
 textarea {
@@ -87,7 +92,8 @@ h2, h3 {
 }
 
 textarea,
-input {
+input,
+select {
   width: 100%;
   border-radius: var(--inner-radius);
   padding: .5rem;
@@ -95,17 +101,12 @@ input {
   color: #333;
   box-shadow: 0 0 0 1px var(--divider-color);
   border: none;
-  background: var(--neutral-color);
-}
-
-textarea {
-  scrollbar-width: thin;
-  resize: none;
 }
 
 label {
   display: block;
   margin-block-end: .5rem;
+  margin-inline-end: 6px;
   font-size: var(--small-font-size);
   font-weight: 500;
   color: #555;

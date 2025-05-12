@@ -7,10 +7,6 @@ const runBtn = document.querySelector("#run");
 const stopBtn = document.querySelector("#stop");
 const nShotExampleEl = document.querySelector("#n-shot-example");
 const outputEl = document.querySelector("#output");
-const initLatencyMetricEl = document.querySelector("#init-latency-metric");
-const firstChunkLatencyMetricEl = document.querySelector("#first-chunk-latency-metric");
-const chunksMetricEl = document.querySelector("#chunks-metric");
-const chunkRateMetricEl = document.querySelector("#chunk-rate-metric");
 const spinnerEl = createSpinner();
 
 const EXAMPLE_PROMPTS = [
@@ -66,10 +62,10 @@ linkRangewithNumber(temperatureEl, temperatureEl.nextElementSibling);
 linkRangewithNumber(topKEl, topKEl.nextElementSibling);
 
 addEventListener("load", async () => {
-  await checkPromptAPIAvailability();
+  await checkLanguageModelAPIAvailability();
 
   // Getting a session to show the download progress.
-  let session = await getPromptSession();
+  let session = await getLanguageModelSession();
   let abortController;
 
   stopBtn.addEventListener("click", () => {
@@ -95,29 +91,37 @@ addEventListener("load", async () => {
     const temperature = parseFloat(temperatureEl.value);
     const topK = parseInt(topKEl.value);
     const systemPrompt = systemPromptEl.value ? systemPromptEl.value.trim() : undefined;
-    const initialPrompts = initialPromptsEl.value ? JSON.parse(initialPromptsEl.value) : undefined;
-    console.log("Prompting with the following settings", { temperature, topK, systemPrompt, initialPrompts });
+    let initialPrompts = initialPromptsEl.value ? JSON.parse(initialPromptsEl.value) : undefined;
+    
+    // If both systemPrompt and initialPrompts are present, use systemPrompt only.
+    // Both go into the session's initialPrompt option, so only one can be used.
+    if (systemPrompt) {
+      console.warn("Both systemPrompt and initialPrompts are set. Using systemPrompt only.");
+      initialPrompts = [
+        { role: 'system', content: systemPrompt }
+      ];
+    }
 
-    const startTime = performance.now();
+    console.log("Prompting with the following settings", { temperature, topK, initialPrompts });
+
+    const metrics = new PlaygroundMetrics();
+    metrics.signalOnBeforeCreateSession();
 
     // Create a new session.
     try {
-      session = await getPromptSession({
+      session = await getLanguageModelSession({
         temperature,
         topK,
-        systemPrompt,
-        initialPrompts,
+        initialPrompts
       });
     } catch (e) {
-      displaySessionMessage(`Could not create session: ${e}`, true);
+      displaySessionMessage(`Could not create the LanguageModel session: ${e}`, true);
       console.error(e);
       spinnerEl.remove();
       return;
     }
 
-    const modelCreatedTime = performance.now();
-
-    initLatencyMetricEl.innerText = Math.round(modelCreatedTime - startTime);
+    metrics.signalOnAfterSessionCreated();
 
     try {
       abortController = new AbortController();
@@ -125,24 +129,17 @@ addEventListener("load", async () => {
         signal: abortController.signal
       });
 
-      const streamStartTime = performance.now();
-      let isFirstChunk = true;
-      let count = 0;
+      metrics.signalOnBeforeStream();
 
+      let isFirstChunk = true;
       for await (const chunk of stream) {
         if (isFirstChunk) {
-          const timeToFirstChunk = performance.now() - streamStartTime;
-          firstChunkLatencyMetricEl.innerText = Math.round(timeToFirstChunk);
           spinnerEl.remove();
           isFirstChunk = false;
           outputEl.textContent = "";
         }
 
-        count++;
-        chunksMetricEl.innerText = count;
-
-        const rate = count / ((performance.now() - streamStartTime) / 1000);
-        chunkRateMetricEl.innerText = rate.toFixed(1);
+        metrics.signalOnStreamChunk();
 
         outputEl.textContent += chunk;
       }

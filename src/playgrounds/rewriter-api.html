@@ -1,0 +1,71 @@
+---
+layout: playground.njk
+title: Rewriter API playground
+shorttitle: Rewriter
+description: Rewrite text based on a description of what you want to change.
+stylesheet: rewriter-api.css
+script: rewriter-api.js
+---
+
+<div class="settings-row no-separator">
+  <label for="text">Text to rewrite</label>
+  <textarea spellcheck="false" id="text"
+    placeholder="The text that you want to rewrite">A large language model (LLM) is a type of machine learning model designed for natural language processing tasks such as language generation. LLMs are language models with many parameters, and are trained with self-supervised learning on a vast amount of text.</textarea>
+</div>
+
+<div class="settings-row">
+  <label for="shared-context">
+    Shared context
+    <span role="tooltip" id="shared-context-tooltip" style="anchor-name:--shared-context-anchor;">
+      <span class="tooltip-content" style="position-anchor:--shared-context-anchor;">
+        Shared context to be used for the model session. This context describes the type of text that the model session will be asked to rewrite.
+      </span>
+    </span>
+  </label>
+  <input type="text" id="shared-context" value="The dictionary definition of a large language model."
+    aria-describedby="shared-context-tooltip">
+</div>
+
+<div class="settings-row">
+  <label for="context">
+    Context
+    <span role="tooltip" id="context-tooltip" style="anchor-name:--context-anchor;">
+      <span class="tooltip-content" style="position-anchor:--context-anchor;">
+        Context to be used for this specific rewrite. Use this context to provide rewriting instructions to the model.
+      </span>
+    </span>
+  </label>
+  <input type="text" id="context" value="Avoid any unnecessary technical jargon." aria-describedby="context-tooltip">
+</div>
+
+<div class="settings-row no-separator">
+  <label for="tone">Tone</label>
+  <select name="tone" id="tone">
+    <option value="as-is">As-is</option>
+    <option value="more-formal">More formal</option>
+    <option value="more-casual" selected>More casual</option>
+  </select>
+</div>
+
+<div class="settings-row no-separator">
+  <label for="length">Length</label>
+  <select name="length" id="length">
+    <option value="as-is">As-is</option>
+    <option value="shorter" selected>Shorter</option>
+    <option value="longer">Longer</option>
+  </select>
+</div>
+
+<div class="settings-row">
+  <label for="format">Format</label>
+  <select name="format" id="format">
+    <option value="as-is">As-is</option>
+    <option value="markdown" selected>Markdown</option>
+    <option value="plain-text">Plain text</option>
+  </select>
+</div>
+
+<div class="settings-row submit">
+  <button class="ai-button" id="rewrite">Rewrite</button>
+  <button id="stop">Stop</button>
+</div>

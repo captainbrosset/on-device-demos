@@ -1,0 +1,50 @@
+---
+layout: playground.njk
+title: Summarizer API playground
+shorttitle: Summarizer
+description: Summarize text based on a description of what you want to summarize.
+stylesheet: summarizer-api.css
+script: summarizer-api.js
+---
+
+<div class="settings-row no-separator">
+  <label for="content">Text to summarize</label>
+  <textarea spellcheck="false" id="content"></textarea>
+</div>
+
+<div class="settings-row">
+  <label for="context">Additional context</label>
+  <textarea spellcheck="false" id="context" placeholder="Additional context about the content that can help the summarizer"></textarea>
+</div>
+
+<div class="settings-row no-separator">
+  <label for="type">Type of summary</label>
+  <select name="type" id="type">
+    <option value="key-points" selected>Key points</option>
+    <option value="tl;dr">TL;DR</option>
+    <option value="teaser">Teaser</option>
+    <option value="headline">Headline</option>
+  </select>
+</div>
+
+<div class="settings-row no-separator">
+  <label for="length">Length</label>
+  <select name="length" id="length">
+    <option value="short" selected>Short</option>
+    <option value="medium">Medium</option>
+    <option value="long">Long</option>
+  </select>
+</div>
+
+<div class="settings-row">
+  <label for="format">Format</label>
+  <select name="format" id="format">
+    <option value="markdown" selected>Markdown</option>
+    <option value="plain-text">Plain text</option>
+  </select>
+</div>
+
+<div class="settings-row submit">
+  <button class="ai-button" id="summarize">Summarize</button>
+  <button id="stop">Stop</button>
+</div>
