@@ -1,8 +1,8 @@
 {% include "header.njk" %}
 
-  <link rel="stylesheet" href="/static/playground.css">
+  <link rel="stylesheet" href="/on-device-demos/static/playground.css">
   {% if stylesheet %}
-    <link rel="stylesheet" href="/static/{{ stylesheet }}">
+    <link rel="stylesheet" href="/on-device-demos/static/{{ stylesheet }}">
   {% endif %}
 
   <main>
@@ -25,11 +25,11 @@
     </div>
   </main>
 
-  <script src="/static/session.js"></script>
-  <script src="/static/spinner.js"></script>
-  <script src="/static/metrics.js"></script>
+  <script src="/on-device-demos/static/session.js"></script>
+  <script src="/on-device-demos/static/spinner.js"></script>
+  <script src="/on-device-demos/static/metrics.js"></script>
   {% if script %}
-    <script src="/static/{{ script }}"></script>
+    <script src="/on-device-demos/static/{{ script }}"></script>
   {% endif %}
 
 {% include "footer.njk" %}
