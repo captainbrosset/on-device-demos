@@ -5,7 +5,6 @@ export default async function(eleventyConfig) {
     dir: {
       "input": "src",
       "output": "docs",
-    },
-    pathPrefix: "/on-device-demos/"
+    }
   }
 };
