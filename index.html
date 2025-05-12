@@ -10,7 +10,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap"
     rel="stylesheet">
-  <title>Summarizer API playground</title>
+  <title>Built-in AI Playground</title>
   <link rel="stylesheet" href="../../static/button.css">
   <link rel="stylesheet" href="../../static/design.css">
   <link rel="stylesheet" href="../../static/spinner.css">
@@ -33,7 +33,7 @@
         <span class="item parent">Writing assistance</span>
         <ul class="menu">
           <li>
-            <a href="../../playgrounds/summarizer-api" class="item current">Summarizer</a>
+            <a href="../../playgrounds/summarizer-api" class="item">Summarizer</a>
           </li>
           <li>
             <a href="../../playgrounds/writer-api" class="item">Writer</a>
@@ -69,7 +69,7 @@
         <span class="item parent">Writing assistance</span>
         <ul class="menu">
           <li>
-            <a href="../../playgrounds/summarizer-api" class="item current">Summarizer</a>
+            <a href="../../playgrounds/summarizer-api" class="item">Summarizer</a>
           </li>
           <li>
             <a href="../../playgrounds/writer-api" class="item">Writer</a>
@@ -95,79 +95,30 @@
 
 
 
-  <link rel="stylesheet" href="../../static/playground.css">
-  
-    <link rel="stylesheet" href="../../static/summarizer-api.css">
-  
-
   <main>
-    <h1>Summarizer</h1>
-    <p class="description">Summarize text based on a description of what you want to summarize. For more information, check out <a href="https://aka.ms/edge-prompt-api-docs">the API documentation</a>.</p>
+    <h1>Built-in AI Playground</h1>
+    <p class="description">A set of pages that demonstrate the built-in AI capabilities of Microsoft Edge. For more information, check out <a href="https://aka.ms/edge-prompt-api-docs">the API documentation</a>.</p>
 
-    <div id="message-ui" class="message-bar"></div>
-
-    <div class="settings card-with-shadow">
+    <div>
       
-<div class="settings-row no-separator">
-  <label for="content">Text to summarize</label>
-  <textarea spellcheck="false" id="content"></textarea>
-</div>
+<h2>API playgrounds</h2>
 
-<div class="settings-row">
-  <label for="context">Additional context</label>
-  <textarea spellcheck="false" id="context" placeholder="Additional context about the content that can help the summarizer"></textarea>
-</div>
+<ul>
+  <li><a href="playgrounds/prompt-api">Prompt API</a></li>
+  <li><a href="playgrounds/summarizer-api">Summarizer API</a></li>
+  <li><a href="playgrounds/writer-api">Writer API</a></li>
+  <li><a href="playgrounds/rewriter-api">Rewriter API</a></li>
+</ul>
 
-<div class="settings-row no-separator">
-  <label for="type">Type of summary</label>
-  <select name="type" id="type">
-    <option value="key-points" selected>Key points</option>
-    <option value="tl;dr">TL;DR</option>
-    <option value="teaser">Teaser</option>
-    <option value="headline">Headline</option>
-  </select>
-</div>
+<h2>Samples</h2>
 
-<div class="settings-row no-separator">
-  <label for="length">Length</label>
-  <select name="length" id="length">
-    <option value="short" selected>Short</option>
-    <option value="medium">Medium</option>
-    <option value="long">Long</option>
-  </select>
-</div>
+<ul>
+  <li><a href="samples/e-commerce">E-commerce product review</a></li>
+  <li><a href="samples/news">News</a></li>
+</ul>
 
-<div class="settings-row">
-  <label for="format">Format</label>
-  <select name="format" id="format">
-    <option value="markdown" selected>Markdown</option>
-    <option value="plain-text">Plain text</option>
-  </select>
-</div>
-
-<div class="settings-row submit">
-  <button class="ai-button" id="summarize">Summarize</button>
-  <button id="stop">Stop</button>
-</div>
-
-    </div>
-
-    <pre id="output"></pre>
-
-    <div class="metrics card-with-shadow">
-      <span class="metric">Initial latency: <span class="value" id="init-latency-metric"></span> ms</span>
-      <span class="metric">First chunk latency: <span class="value" id="first-chunk-latency-metric"></span> ms</span>
-      <span class="metric">Chunks: <span class="value" id="chunks-metric"></span></span>
-      <span class="metric">Rate: <span class="value" id="chunk-rate-metric"></span> chunk/sec</span>
     </div>
   </main>
-
-  <script src="../../static/session.js"></script>
-  <script src="../../static/spinner.js"></script>
-  <script src="../../static/metrics.js"></script>
-  
-    <script src="../../static/summarizer-api.js"></script>
-  
 
 </body>
 </html>

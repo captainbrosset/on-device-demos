@@ -28,7 +28,6 @@ main {
 
 main h1 {
   grid-area: title;
-  margin: 0;
 }
 
 main .description {
