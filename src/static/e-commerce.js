@@ -63,6 +63,7 @@ addEventListener("DOMContentLoaded", async () => {
 
   let summarizerSessionIsReady = false;
   let promptSessionIsReady = false;
+  let rewriterSessionIsReady = false;
 
   const summarizerSessionPromise = getSummarizerSession({
     sharedContext: "This is a list of user reviews for a pair of hiking boots.",
@@ -82,7 +83,7 @@ addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  const promptSessionPromise = getPromptSession({
+  const promptSessionPromise = getLanguageModelSession({
     initialPrompts: [
       { role: "system", content: "Classify the following product reviews as either OK or Not OK.", },
       { role: "user", content: "Great shoes! I was surprised at how comfortable these boots are for the price. They fit well and are very lightweight." },
