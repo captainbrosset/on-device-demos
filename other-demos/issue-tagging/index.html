@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="https://edgestatic.azureedge.net/welcome/static/favicon.png">
+  <title>Issue tagging demo</title>
+  <link rel="stylesheet" href="button.css">
+  <style>
+    body {
+      font-family: system-ui;
+      font-size: 1rem;
+    }
+
+    input,
+    textarea,
+    button {
+      padding: .5rem;
+      border-radius: .25rem;
+      font-size: inherit;
+      font-family: inherit;
+    }
+
+    .issue-form {
+      position: absolute;
+      inset: 10vmin;
+      padding: 1rem;
+      box-shadow: inset 0 0 .5rem 0 #ccc;
+      border-radius: .25rem;
+      background: #eee;
+    }
+
+    h1 {
+      margin: 0 0 1rem 0;
+    }
+
+    input,
+    textarea {
+      border: 1px solid #ccc;
+    }
+
+    textarea {
+      height: 10rem;
+    }
+
+    .form-row {
+      margin: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+
+    label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    button {
+      align-self: end;
+    }
+
+    #status {
+      background: #eee;
+      padding: .5rem;
+      border-radius: .25rem;
+    }
+
+    #tags,
+    #tags li {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .25rem;
+      border: 1px solid #ccc;
+      border-radius: .25rem;
+      background: white;
+      padding: .25rem;
+    }
+
+    #tags li {
+      border-radius: 100vw;
+      padding: .25rem 1rem;
+      background: rgb(223 222 83);
+      font-weight: bold;
+      font-size: small;
+    }
+
+    #tags li.initial {
+      font-style: italic;
+      background-color: transparent;
+      font-weight: normal;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="issue-form">
+    <h1>Report an issue or request a feature</h1>
+
+    <p>Use this form to report an issue or bug with the system, or request a new feature to be added.</p>
+
+    <form id="form">
+      <div class="form-row">
+        <label for="title">Add a title</label>
+        <input id="title" type="text" placeholder="A short title for your issue or feature request">
+      </div>
+      <div class="form-row">
+        <label for="description">Add a description</label>
+        <div id="message"></div>
+        <textarea id="description"
+          placeholder="A long description of the issue you are facing or the enhancement you are requesting"></textarea>
+      </div>
+      <div class="form-row">
+        <label>Tags</label>
+        <ul id="tags">
+          <li class="initial">Submit your issue first, the <strong>Bug</strong> or <strong>Feature request</strong> tags will be added</li>
+        </ul>
+      </div>
+      <div class="form-row">
+        <button type="submit" id="submit-button" class="ai-button">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="session.js"></script>
+  <script src="issue-tagging.js"></script>
+</body>
+
+</html>
