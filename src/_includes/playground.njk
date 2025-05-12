@@ -1,67 +1,9 @@
-<!doctype html>
-<html lang="en">
+{% include "header.njk" %}
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="https://edgestatic.azureedge.net/welcome/static/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap"
-    rel="stylesheet">
-  <title>{{ title }}</title>
-  <link rel="stylesheet" href="../../static/button.css">
-  <link rel="stylesheet" href="../../static/design.css">
-  <link rel="stylesheet" href="../../static/spinner.css">
-  <link rel="stylesheet" href="../../static/app.css">
   <link rel="stylesheet" href="../../static/playground.css">
-  <link rel="stylesheet" href="../../static/{{ stylesheet }}">
-</head>
-
-{% macro nav(isPopover) %}
-  <nav {% if isPopover %} id="menu-popover" popover{% else %} id="menu"{% endif %}>
-    <ul class="menu">
-      <li>
-        <a href="../../playgrounds/prompt-api" class="item{% if shorttitle == "Prompt" %} current{% endif %}">Prompt</a>
-      </li>
-      <li>
-        <span class="item parent">Writing assistance</span>
-        <ul class="menu">
-          <li>
-            <a href="../../playgrounds/summarizer-api" class="item{% if shorttitle == "Summarizer" %} current{% endif %}">Summarizer</a>
-          </li>
-          <li>
-            <a href="../../playgrounds/writer-api" class="item{% if shorttitle == "Writer" %} current{% endif %}">Writer</a>
-          </li>
-          <li>
-            <a href="../../playgrounds/rewriter-api" class="item{% if shorttitle == "Rewriter" %} current{% endif %}">Rewriter</a>
-          </li>
-        </ul>
-      </li>
-      <li class="divider">
-        <span class="item parent">Samples</span>
-        <ul class="menu">
-          <li>
-            <a href="../../samples/e-commerce" class="item{% if shorttitle == "E-Commerce" %} current{% endif %}">E-commerce product review</a>
-          </li>
-          <li>
-            <a href="../../samples/news" class="item{% if shorttitle == "News" %} current{% endif %}">News</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
-{% endmacro %}
-
-<body>
-  <header>
-    <button title="Toggle the menu" class="nav-anchor" popovertarget="menu-popover"><span class="sr-only">Open menu</span></button>
-    <h2 class="app-title">Built-in AI Playground</h2>
-    {{ nav(false) }}
-  </header>
-
-  {{ nav(true) }}
+  {% if stylesheet %}
+    <link rel="stylesheet" href="../../static/{{ stylesheet }}">
+  {% endif %}
 
   <main>
     <h1>{{ shorttitle }}</h1>
@@ -86,7 +28,8 @@
   <script src="../../static/session.js"></script>
   <script src="../../static/spinner.js"></script>
   <script src="../../static/metrics.js"></script>
-  <script src="../../static/{{ script }}"></script>
-</body>
+  {% if script %}
+    <script src="../../static/{{ script }}"></script>
+  {% endif %}
 
-</html>
+{% include "footer.njk" %}

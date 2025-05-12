@@ -1,0 +1,12 @@
+{% include "header.njk" %}
+
+  <main>
+    <h1>{{ shorttitle }}</h1>
+    <p class="description">{{ description }} For more information, check out <a href="https://aka.ms/edge-prompt-api-docs">the API documentation</a>.</p>
+
+    <div>
+      {{ content | safe }}
+    </div>
+  </main>
+
+{% include "footer.njk" %}
