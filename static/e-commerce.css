@@ -1,8 +1,5 @@
 body {
   --big-margin: calc(2 * var(--padding));
-  margin: var(--big-margin) auto;
-  max-width: 1000px;
-  padding: 0 var(--big-margin);
 }
 
 .ai-session-message-ui {
@@ -10,48 +7,49 @@ body {
   display: none;
 }
 
-header {
+.shoes-header {
   display: flex;
   gap: var(--gap);
   align-items: baseline;
   margin-block-end: var(--big-margin);
   flex-wrap: wrap;
-  padding-block-end: var(--big-margin);
+  padding: var(--big-margin) var(--padding);
   background: white;
-  box-shadow: 0 calc(-1 * var(--gap)) 0 var(--gap) white;
+  box-shadow: none;
+  border-radius: 0;
 }
 
-header h1 {
+.shoes-header h1 {
   margin: 0;
 }
 
-header nav {
+.shoes-header nav {
   margin-inline-end: auto;
 }
 
-header search {
+.shoes-header search {
   flex: 300px 0 1;
 }
 
-header nav ul,
-header nav li {
+.shoes-header nav ul,
+.shoes-header nav li {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-header nav ul {
+.shoes-header nav ul {
   display: flex;
   gap: var(--gap);
 }
 
 @media (max-width: 500px) {
-  header nav ul {
+  .shoes-header nav ul {
     flex-wrap: wrap;
   }
 }
 
-header nav a {
+.shoes-header nav a {
   white-space: nowrap;
   text-transform: uppercase;
   color: black;
@@ -60,7 +58,7 @@ header nav a {
   font-family: var(--header-font-family);
 }
 
-header nav a:hover {
+.shoes-header nav a:hover {
   text-decoration: underline;
 }
 
