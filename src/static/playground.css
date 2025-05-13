@@ -69,13 +69,18 @@ main .description {
   padding-block-end: 0;
 }
 
-.settings .settings-row summary {
+/* In case there are multiple label/input pairs in a settings-row, space them out. */
+.settings .settings-row input + label, .settings .settings-row textarea + label {
+  padding-block-start: var(--padding);
+}
+
+.settings summary {
   font-size: var(--small-font-size);
   cursor: pointer;
   position: relative;
 }
 
-.settings .settings-row summary::after {
+.settings summary::after {
   content: "";
   position: absolute;
   inset-inline-end: 0;
@@ -89,15 +94,15 @@ main .description {
   transition: rotate 0.2s ease-in-out;
 }
 
-.settings .settings-row details[open] summary::after {
+.settings details[open] summary::after {
   rotate: 0turn;
 }
 
-.settings .settings-row details ::marker {
+.settings details ::marker {
   content: "";
 }
 
-.settings .settings-row details[open]::details-content {
+.settings details[open]::details-content {
   padding-block-start: var(--padding);
 }
 

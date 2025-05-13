@@ -2,17 +2,18 @@ textarea {
   height: 5rem;
 }
 
-textarea#initial-prompts {
+textarea.code {
   font-size: .9em;
   height: 10rem;
+  font-family: monospace;
 }
 
-#n-shot-example {
+.example-link-in-label {
   text-decoration: underline;
   cursor: pointer;
 }
 
-#n-shot-example:hover {
+.example-link-in-label:hover {
   text-decoration: none;
 }
 
