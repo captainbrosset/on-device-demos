@@ -113,26 +113,34 @@
   <textarea spellcheck="false" id="prompt" placeholder="Enter text to prompt the language model"></textarea>
 </div>
 
-<div class="settings-row no-separator">
+<div class="settings-row">
   <label for="system-prompt">System prompt</label>
   <textarea spellcheck="false" id="system-prompt"
     placeholder="Enter instructions, guidelines, and any information for the language model"></textarea>
 </div>
 
-<div class="settings-row">
-  <details>
-    <summary>Advanced</summary>
-    <label for="initial-prompts">
-      N-shot prompt instructions (<span id="n-shot-example">load an example</span>)
-      <span role="tooltip" id="n-shot-tooltip" style="anchor-name:--nshot-anchor;">
-        <span class="tooltip-content" style="position-anchor:--nshot-anchor;">
-          N-shot prompting 
-        </span>
+<details class="settings-row">
+  <summary>Advanced</summary>
+  <label for="initial-prompts">
+    N-shot prompt instructions (<span class="example-link-in-label" id="n-shot-example">load an example</span>)
+    <span role="tooltip" id="n-shot-tooltip" style="anchor-name:--nshot-anchor;">
+      <span class="tooltip-content" style="position-anchor:--nshot-anchor;">
+        N-shot prompting is a technique used to provide the model with a few examples of the desired input-output pairs.
       </span>
-    </label>
-    <textarea spellcheck="false" id="initial-prompts" placeholder="Enter user/assistant interactions" aria-describedby="n-shot-tooltip"></textarea>
-  </details>
-</div>
+    </span>
+  </label>
+  <textarea spellcheck="false" id="initial-prompts" placeholder="Enter user/assistant interactions" aria-describedby="n-shot-tooltip" class="code"></textarea>
+
+  <label for="response-schema">
+    Response constraint schema (<span class="example-link-in-label" id="response-schema-example">load an example</span>)
+    <span role="tooltip" id="response-schema-tooltip" style="anchor-name:--schema-anchor;">
+      <span class="tooltip-content" style="position-anchor:--schema-anchor;">
+        A JSON schema that's used to constrain the model's response.
+      </span>
+    </span>
+  </label>
+  <textarea spellcheck="false" id="response-schema" placeholder="Enter a JSON schema to constrain the output." aria-describedby="response-schema-tooltip" class="code"></textarea>
+</details>
 
 <div class="settings-row no-separator">
   <label for="top-k">

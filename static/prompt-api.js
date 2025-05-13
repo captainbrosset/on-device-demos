@@ -1,11 +1,13 @@
 const promptEl = document.querySelector("#prompt");
 const systemPromptEl = document.querySelector("#system-prompt");
 const initialPromptsEl = document.querySelector("#initial-prompts");
+const responseSchemaEl = document.querySelector("#response-schema");
 const topKEl = document.querySelector("#top-k");
 const temperatureEl = document.querySelector("#temperature");
 const runBtn = document.querySelector("#run");
 const stopBtn = document.querySelector("#stop");
 const nShotExampleEl = document.querySelector("#n-shot-example");
+const responseSchemaExampleEl = document.querySelector("#response-schema-example");
 const outputEl = document.querySelector("#output");
 const spinnerEl = createSpinner();
 
@@ -38,7 +40,31 @@ const N_SHOT_EXAMPLE = {
     { role: "user", content: "LGTM" },
     { role: "assistant", content: "👍, 🚢" }
   ]
-}
+};
+
+const RESPONSE_SCHEMA_EXAMPLE = {
+  prompt: "Rate the following movie from 0 to 5 stars: 'The Shawshank Redemption'.",
+  system: "You are a movie critic.",
+  schema: {
+    "type": "object",
+    "required": [
+      "rating",
+      "review"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "rating": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 5
+      },
+      "review": {
+        "type": "string",
+        "description": "A short review of the movie."
+      }
+    }
+  }
+};
 
 const randomPromptIndex = Math.floor(Math.random() * EXAMPLE_PROMPTS.length);
 promptEl.value = EXAMPLE_PROMPTS[randomPromptIndex].prompt;
@@ -48,6 +74,14 @@ nShotExampleEl.addEventListener("click", () => {
   promptEl.value = N_SHOT_EXAMPLE.prompt;
   systemPromptEl.value = N_SHOT_EXAMPLE.system;
   initialPromptsEl.value = JSON.stringify(N_SHOT_EXAMPLE.initial, null, 2);
+  responseSchemaEl.value = "";
+});
+
+responseSchemaExampleEl.addEventListener("click", () => {
+  promptEl.value = RESPONSE_SCHEMA_EXAMPLE.prompt;
+  systemPromptEl.value = RESPONSE_SCHEMA_EXAMPLE.system;
+  initialPromptsEl.value = "";
+  responseSchemaEl.value = JSON.stringify(RESPONSE_SCHEMA_EXAMPLE.schema, null, 2);
 });
 
 function linkRangewithNumber(rangeEl, numberEl) {
@@ -91,18 +125,35 @@ addEventListener("load", async () => {
     const temperature = parseFloat(temperatureEl.value);
     const topK = parseInt(topKEl.value);
     const systemPrompt = systemPromptEl.value ? systemPromptEl.value.trim() : undefined;
-    let initialPrompts = initialPromptsEl.value ? JSON.parse(initialPromptsEl.value) : undefined;
-    
+    let initialPrompts = null;
+    try {
+      initialPrompts = initialPromptsEl.value ? JSON.parse(initialPromptsEl.value) : undefined;
+    } catch (e) {
+      displaySessionMessage(`Invalid initialPrompts JSON: ${e}`, true);
+      console.error(e);
+      spinnerEl.remove();
+      return;
+    }
+
+    let responseConstraint = null;
+    try {
+      responseConstraint = responseSchemaEl.value ? JSON.parse(responseSchemaEl.value) : undefined;
+    } catch (e) {
+      displaySessionMessage(`Invalid responseSchema JSON: ${e}`, true);
+      console.error(e);
+      spinnerEl.remove();
+      return;
+    }
+
     // If both systemPrompt and initialPrompts are present, use systemPrompt only.
     // Both go into the session's initialPrompt option, so only one can be used.
     if (systemPrompt) {
-      console.warn("Both systemPrompt and initialPrompts are set. Using systemPrompt only.");
       initialPrompts = [
         { role: 'system', content: systemPrompt }
       ];
     }
 
-    console.log("Prompting with the following settings", { temperature, topK, initialPrompts });
+    console.log("Prompting with the following settings", { temperature, topK, initialPrompts, responseConstraint });
 
     const metrics = new PlaygroundMetrics();
     metrics.signalOnBeforeCreateSession();
@@ -126,7 +177,8 @@ addEventListener("load", async () => {
     try {
       abortController = new AbortController();
       const stream = session.promptStreaming(promptEl.value, {
-        signal: abortController.signal
+        signal: abortController.signal,
+        responseConstraint
       });
 
       metrics.signalOnBeforeStream();
