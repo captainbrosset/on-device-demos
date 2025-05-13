@@ -69,7 +69,7 @@ const modelDownloadProgressMonitor = m => {
 const defaultLanguageModelSessionOptions = {
   temperature: 1.0,
   topK: 1,
-  responseConstraint: null, // JSON schema to constrain the model output.
+  initialPrompts: [],
   monitor: modelDownloadProgressMonitor
 };
 const defaultSummarizerSessionOptions = {
