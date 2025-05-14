@@ -1,15 +1,22 @@
 ---
 layout: playground.njk
 title: Writer API playground
-shorttitle: Writer
+shorttitle: Writer API
 description: Generate text based on a description of what you want to write.
 stylesheet: writer-api.css
 script: writer-api.js
 ---
 
 <div class="settings-row">
-  <label for="task">Description of the text to write</label>
-  <textarea spellcheck="false" id="task">A draft for an inquiry to my bank about how to enable wire transfers on my account</textarea>
+  <label for="task">
+    Description of the text to write
+    <span role="tooltip" id="task-tooltip" style="anchor-name:--task-anchor;">
+      <span class="tooltip-content" style="position-anchor:--task-anchor;">
+        The description of the text that you want the writer to generate.
+      </span>
+    </span>
+  </label>
+  <textarea spellcheck="false" id="task" aria-describedby="task-tooltip">A draft for an inquiry to my bank about how to enable wire transfers on my account</textarea>
 </div>
 
 <div class="settings-row no-separator">
