@@ -101,7 +101,7 @@
   
 
   <main>
-    <h1>Writer</h1>
+    <h1>Writer API</h1>
     <p class="description">Generate text based on a description of what you want to write. For more information, check out <a href="https://aka.ms/edge-prompt-api-docs">the API documentation</a>.</p>
 
     <div id="message-ui" class="message-bar"></div>
@@ -109,8 +109,15 @@
     <div class="settings card-with-shadow">
       
 <div class="settings-row">
-  <label for="task">Description of the text to write</label>
-  <textarea spellcheck="false" id="task">A draft for an inquiry to my bank about how to enable wire transfers on my account</textarea>
+  <label for="task">
+    Description of the text to write
+    <span role="tooltip" id="task-tooltip" style="anchor-name:--task-anchor;">
+      <span class="tooltip-content" style="position-anchor:--task-anchor;">
+        The description of the text that you want the writer to generate.
+      </span>
+    </span>
+  </label>
+  <textarea spellcheck="false" id="task" aria-describedby="task-tooltip">A draft for an inquiry to my bank about how to enable wire transfers on my account</textarea>
 </div>
 
 <div class="settings-row no-separator">
