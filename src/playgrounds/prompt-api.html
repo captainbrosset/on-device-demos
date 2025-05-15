@@ -2,7 +2,7 @@
 layout: playground.njk
 title: Prompt API playground
 shorttitle: Prompt API
-description: Prompt an on-device language model to generate text based on a description of what you want to write.
+description: Web API to prompt the browser-provided language model. For more information, check out <a href="https://aka.ms/edge-prompt-api-docs" target="_blank">the API documentation</a>.
 stylesheet: prompt-api.css
 script: prompt-api.js
 ---
@@ -19,7 +19,7 @@ script: prompt-api.js
     </span>
   </label>
   <textarea spellcheck="false" id="prompt" placeholder="Enter text to prompt the language model"
-    aria-describedby="user-prompt-tooltip"></textarea>
+    aria-describedby="user-prompt-tooltip">Ordered a Philly cheesesteak, and it was not edible. Their milkshake is just milk with cheap syrup. Horrible place!</textarea>
 </div>
 
 <div class="settings-row">
@@ -35,7 +35,12 @@ script: prompt-api.js
   </label>
   <textarea spellcheck="false" id="system-prompt"
     placeholder="Enter instructions, guidelines, and any information for the language model"
-    aria-describedby="system-prompt-tooltip"></textarea>
+    aria-describedby="system-prompt-tooltip">You are an AI model designed to analyze the sentiment of user-provided text. Your goal is to classify the sentiment into predefined categories and provide a confidence score. Follow these guidelines: 
+
+- Identify whether the sentiment is positive, negative, or neutral. 
+- Provide a confidence score (0-1) reflecting the certainty of the classification. 
+- Ensure the sentiment classification is contextually accurate. 
+- If the sentiment is unclear or highly ambiguous, default to neutral.</textarea>
 </div>
 
 <div class="settings-row">

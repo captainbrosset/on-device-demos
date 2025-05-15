@@ -204,9 +204,28 @@ button.ai-button:active {
 
 .slider input[type="range"] {
   -webkit-appearance: none;
-  height: 12px;
-  border-radius: var(--inner-radius);
-  background: var(--divider-color);
   outline-offset: 2px;
   padding: 0;
+  margin: 0;
+  box-shadow: none;
+  --val: 50%;
+}
+
+.slider input[type="range"]::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  height: 3px;
+  background: #8e9197;
+  border-radius: 100vw;
+  background-image: linear-gradient(to right, #24282f 0 var(--value, 0), transparent 0);
+}
+
+.slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: -9px;
+  background: #25282e;
+  box-shadow: inset 0 0 0 1px #ebeef3, inset 0 0 0 4.5px white;
+  border-radius: 50%;
 }

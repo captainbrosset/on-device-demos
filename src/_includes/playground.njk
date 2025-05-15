@@ -7,7 +7,7 @@
 
   <main>
     <h1>{{ shorttitle }}</h1>
-    <p class="description">{{ description }} For more information, check out <a href="https://aka.ms/edge-prompt-api-docs">the API documentation</a>.</p>
+    <p class="description">{{ description | safe }}</p>
 
     <div id="message-ui" class="message-bar"></div>
 
@@ -28,6 +28,7 @@
   <script src="/on-device-demos/static/session.js"></script>
   <script src="/on-device-demos/static/spinner.js"></script>
   <script src="/on-device-demos/static/metrics.js"></script>
+  <script src="/on-device-demos/static/slider.js"></script>
   {% if script %}
     <script src="/on-device-demos/static/{{ script }}"></script>
   {% endif %}
