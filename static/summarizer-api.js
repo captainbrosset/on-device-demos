@@ -8,17 +8,15 @@ const summarizeBtn = document.querySelector("#summarize");
 const stopBtn = document.querySelector("#stop");
 const spinnerEl = createSpinner();
 
-const DEFAULT_TEXT = `Pablo Ruiz Picasso (25 October 1881 - 8 April 1973) was a Spanish painter, sculptor, printmaker, ceramicist, and theatre designer who spent most of his adult life in France. One of the most influential artists of the 20th century, he is known for co-founding the Cubist movement, the invention of constructed sculpture, the co-invention of collage, and for the wide variety of styles that he helped develop and explore. Among his most famous works are the proto-Cubist Les Demoiselles d'Avignon (1907) and the anti-war painting Guernica (1937), a dramatic portrayal of the bombing of Guernica by German and Italian air forces during the Spanish Civil War.
+const DEFAULT_TEXT = `The Chicxulub crater is an impact crater buried underneath the Yucatán Peninsula in Mexico. Its center is offshore, but the crater is named after the onshore community of Chicxulub Pueblo (not the larger coastal town of Chicxulub Puerto). It was formed slightly over 66 million years ago when an asteroid, about ten kilometers (six miles) in diameter, struck Earth. The crater is estimated to be 200 kilometers (120 miles) in diameter and 1 kilometer (0.62 miles) in depth. It is believed to be the second largest impact structure on Earth, and the only one whose peak ring is intact and directly accessible for scientific research. 
 
-Picasso demonstrated extraordinary artistic talent in his early years, painting in a naturalistic manner through his childhood and adolescence. During the first decade of the 20th century, his style changed as he experimented with different theories, techniques, and ideas. After 1906, the Fauvist work of the older artist Henri Matisse motivated Picasso to explore more radical styles, beginning a fruitful rivalry between the two artists, who subsequently were often paired by critics as the leaders of modern art.
+The crater was discovered by Antonio Camargo and Glen Penfield, geophysicists who had been looking for petroleum in the Yucatán Peninsula during the late 1970s. Penfield was initially unable to obtain evidence that the geological feature was a crater and gave up his search. Later, through contact with Alan R. Hildebrand in 1990, Penfield obtained samples that suggested it was an impact feature. Evidence for the crater's impact origin includes shocked quartz, a gravity anomaly, and tektites in surrounding areas. 
 
-Picasso's output, especially in his early career, is often periodized. While the names of many of his later periods are debated, the most commonly accepted periods in his work are the Blue Period (1901-1904), the Rose Period (1904-1906), the African-influenced Period (1907-1909), Analytic Cubism (1909-1912), and Synthetic Cubism (1912-1919), also referred to as the Crystal period. Much of Picasso's work of the late 1910s and early 1920s is in a neoclassical style, and his work in the mid-1920s often has characteristics of Surrealism. His later work often combines elements of his earlier styles.
-
-Exceptionally prolific throughout the course of his long life, Picasso achieved universal renown and immense fortune for his revolutionary artistic accomplishments, and became one of the best-known figures in 20th-century art.
+The date of the impact coincides with the Cretaceous–Paleogene boundary (commonly known as the K–Pg or K–T boundary). It is now widely accepted that the devastation and climate disruption resulting from the impact was the primary cause of the Cretaceous–Paleogene extinction event, a mass extinction of 75% of plant and animal species on Earth, including all non-avian dinosaurs. 
 
 From Wikipedia, the free encyclopedia.`;
 
-const DEFAULT_CONTEXT = "This is a Wikipedia encyclopedia article about Pablo Picasso.";
+const DEFAULT_CONTEXT = "This is a Wikipedia article about the Chicxulub crater.";
 
 textEl.value = DEFAULT_TEXT;
 contextEl.value = DEFAULT_CONTEXT;

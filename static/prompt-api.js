@@ -11,25 +11,6 @@ const responseSchemaExampleEl = document.querySelector("#response-schema-example
 const outputEl = document.querySelector("#output");
 const spinnerEl = createSpinner();
 
-const EXAMPLE_PROMPTS = [
-  {
-    prompt: "Recommend me three different travel destinations for my next vacation.",
-    system: "You are a friendly, helpful travel assistant."
-  },
-  {
-    prompt: "What are nice recipes if I want to cook something with chicken?",
-    system: "You are friendly, helpful assistant, specialized in cooking. The user is not a professional cook, so the recipes should be easy to follow."
-  },
-  {
-    prompt: "How big is the Amazon rain forest?",
-    system: "Pretend to be an eloquent and poetic nature expert. The user is a child."
-  },
-  {
-    prompt: "Suggest hobbies that I could pick up in my free time that are not too expensive.",
-    system: "You are a friendly, helpful assistant. The user doesn't have much time."
-  }
-];
-
 const N_SHOT_EXAMPLE = {
   prompt: "Back to the drawing board.",
   system: "",
@@ -43,32 +24,27 @@ const N_SHOT_EXAMPLE = {
 };
 
 const RESPONSE_SCHEMA_EXAMPLE = {
-  prompt: "Rate the following movie from 0 to 5 stars: 'The Shawshank Redemption'.",
-  system: "You are a movie critic.",
+  prompt: "Ordered a Philly cheesesteak, and it was not edible. Their milkshake is just milk with cheap syrup. Horrible place!",
+  system: "You are an AI model designed to analyze the sentiment of user-provided text. Your goal is to classify the sentiment into predefined categories and provide a confidence score. Follow these guidelines:\n\n- Identify whether the sentiment is positive, negative, or neutral.\n- Provide a confidence score (0-1) reflecting the certainty of the classification.\n- Ensure the sentiment classification is contextually accurate.\n- If the sentiment is unclear or highly ambiguous, default to neutral.\n\nYour responses should be structured and concise, adhering to the defined output schema.",
   schema: {
     "type": "object",
-    "required": [
-      "rating",
-      "review"
-    ],
+    "required": ["sentiment", "confidence"],
     "additionalProperties": false,
     "properties": {
-      "rating": {
+      "sentiment": {
+        "type": "string",
+        "enum": ["positive", "negative", "neutral"],
+        "description": "The sentiment classification of the input text."
+      },
+      "confidence": {
         "type": "number",
         "minimum": 0,
-        "maximum": 5
-      },
-      "review": {
-        "type": "string",
-        "description": "A short review of the movie."
+        "maximum": 1,
+        "description": "A confidence score indicating certainty of the sentiment classification."
       }
     }
   }
 };
-
-const randomPromptIndex = Math.floor(Math.random() * EXAMPLE_PROMPTS.length);
-promptEl.value = EXAMPLE_PROMPTS[randomPromptIndex].prompt;
-systemPromptEl.value = EXAMPLE_PROMPTS[randomPromptIndex].system;
 
 nShotExampleEl.addEventListener("click", () => {
   promptEl.value = N_SHOT_EXAMPLE.prompt;

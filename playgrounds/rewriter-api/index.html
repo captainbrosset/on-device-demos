@@ -30,16 +30,18 @@
         <a href="/on-device-demos/playgrounds/prompt-api" class="item">Prompt</a>
       </li>
       <li>
-        <span class="item parent">Writing assistance</span>
+        <span class="item parent">
+          <a href="/on-device-demos/playgrounds/writer-api">Writing assistance</a>
+        </span>
         <ul class="menu">
-          <li>
-            <a href="/on-device-demos/playgrounds/summarizer-api" class="item">Summarizer</a>
-          </li>
           <li>
             <a href="/on-device-demos/playgrounds/writer-api" class="item">Writer</a>
           </li>
           <li>
             <a href="/on-device-demos/playgrounds/rewriter-api" class="item current">Rewriter</a>
+          </li>
+          <li>
+            <a href="/on-device-demos/playgrounds/summarizer-api" class="item">Summarizer</a>
           </li>
         </ul>
       </li>
@@ -66,16 +68,18 @@
         <a href="/on-device-demos/playgrounds/prompt-api" class="item">Prompt</a>
       </li>
       <li>
-        <span class="item parent">Writing assistance</span>
+        <span class="item parent">
+          <a href="/on-device-demos/playgrounds/writer-api">Writing assistance</a>
+        </span>
         <ul class="menu">
-          <li>
-            <a href="/on-device-demos/playgrounds/summarizer-api" class="item">Summarizer</a>
-          </li>
           <li>
             <a href="/on-device-demos/playgrounds/writer-api" class="item">Writer</a>
           </li>
           <li>
             <a href="/on-device-demos/playgrounds/rewriter-api" class="item current">Rewriter</a>
+          </li>
+          <li>
+            <a href="/on-device-demos/playgrounds/summarizer-api" class="item">Summarizer</a>
           </li>
         </ul>
       </li>
@@ -102,7 +106,7 @@
 
   <main>
     <h1>Rewriter API</h1>
-    <p class="description">Rewrite text based on a description of what you want to change. For more information, check out <a href="https://aka.ms/edge-prompt-api-docs">the API documentation</a>.</p>
+    <p class="description">Web API to modify text in different tones, lengths, etc. using the browser-provided language model. For more information, check out <a href="https://aka.ms/edge-writing-assistance-api-docs" target="_blank">the API documentation</a>.</p>
 
     <div id="message-ui" class="message-bar"></div>
 
@@ -120,7 +124,7 @@
     </span>
   </label>
   <textarea spellcheck="false" id="text" placeholder="The text that you want to rewrite"
-    aria-describedby="text-tooltip">A large language model (LLM) is a type of machine learning model designed for natural language processing tasks such as language generation. LLMs are language models with many parameters, and are trained with self-supervised learning on a vast amount of text.</textarea>
+    aria-describedby="text-tooltip">The app crashes constantly with the latest update. What a waste of time! The developers are useless..</textarea>
 </div>
 
 <div class="settings-row">
@@ -135,7 +139,7 @@
     </span>
   </label>
   <textarea id="shared-context"
-    aria-describedby="shared-context-tooltip">The dictionary definition of a large language model.</textarea>
+    aria-describedby="shared-context-tooltip">This is user feedback about an app being submitted to a public forum.</textarea>
 </div>
 
 <div class="settings-row">
@@ -150,7 +154,7 @@
     </span>
   </label>
   <textarea type="text" id="context"
-    aria-describedby="context-tooltip">Avoid any unnecessary technical jargon.</textarea>
+    aria-describedby="context-tooltip">Refine user feedback to remove harsh, profane, or negative language while preserving the core issue, ensuring clarity and professionalism.</textarea>
 </div>
 
 <div class="settings-row no-separator">
@@ -199,6 +203,7 @@
   <script src="/on-device-demos/static/session.js"></script>
   <script src="/on-device-demos/static/spinner.js"></script>
   <script src="/on-device-demos/static/metrics.js"></script>
+  <script src="/on-device-demos/static/slider.js"></script>
   
     <script src="/on-device-demos/static/rewriter-api.js"></script>
   

@@ -9,7 +9,7 @@ body {
 header {
   padding: var(--padding);
   align-self: start;
-  flex: 260px 0 1;
+  flex: 200px 0 0;
   border-radius: var(--outer-radius);
   box-shadow: 0 6px 12px #1b355614;
   background: var(--form-background);
@@ -67,10 +67,11 @@ header .nav-anchor:hover {
 }
 
 .menu .item {
-  padding: 4px 8px;
+  padding: 6px 8px;
   display: block;
   border-radius: 8px;
   position: relative;
+  line-height: 20px;
 }
 
 .menu .menu .item {
@@ -86,7 +87,7 @@ header .nav-anchor:hover {
   background: var(--divider-color);
 }
 
-.menu .item:not(.parent):hover {
+.menu .item:hover {
   background: var(--divider-color);
 }
 
